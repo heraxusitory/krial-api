@@ -117,7 +117,7 @@ class DGParserCommand extends Command
                         ])
                     ]);
 
-                $this->info('Торговое предложение ОТКРЫТОГО ТИПА для продукта ДГУ: ' . $dg_product_model->name . ' сохранено' . "\n");
+//                $this->info('Торговое предложение ОТКРЫТОГО ТИПА для продукта ДГУ: ' . $dg_product_model->name . ' сохранено' . "\n");
 
                 $dg_version_in_case = DGVersion::where('code', DGVersion::VERSION_IN_CASE())->firstOrFail();
 
@@ -132,7 +132,7 @@ class DGParserCommand extends Command
                         ])
                     ]);
 
-                $this->info('Торговое предложение В КОЖУХЕ для продукта ДГУ: ' . $dg_product_model->name . ' сохранено' . "\n");
+//                $this->info('Торговое предложение В КОЖУХЕ для продукта ДГУ: ' . $dg_product_model->name . ' сохранено' . "\n");
 
 
                 $charachter_blocks = $brand_product_parser->find('.product-stats-block');
@@ -147,7 +147,7 @@ class DGParserCommand extends Command
                         'name' => $group_name,
                     ]);
 
-                    $this->info("Группа свойств {$group_model->name} для продукта ДГУ: $dg_product_model->name сохранена" . "\n");
+//                    $this->info("Группа свойств {$group_model->name} для продукта ДГУ: $dg_product_model->name сохранена" . "\n");
 
 
                     foreach ($block->find('.product-stats-block-list')[0]->children as $property) {
@@ -173,7 +173,7 @@ class DGParserCommand extends Command
                                 'name' => $prop_value,
                                 'country' => $engine_country
                             ]);
-                            $this->info("Производитель двигателя {$engine_manufacture->name} для продукта ДГУ: $dg_product_model->name сохранен" . "\n");
+//                            $this->info("Производитель двигателя {$engine_manufacture->name} для продукта ДГУ: $dg_product_model->name сохранен" . "\n");
                         }
 
 //                    dump('ПОсле ' . $prop_value);
@@ -192,7 +192,7 @@ class DGParserCommand extends Command
                             'value' => $prop_value,
                         ]);
 
-                        $this->info("Свойство {$property->name} = {$property_value->value} для продукта ДГУ группы {$group_model->name}: $dg_product_model->name сохранено" . "\n");
+//                        $this->info("Свойство {$property->name} = {$property_value->value} для продукта ДГУ группы {$group_model->name}: $dg_product_model->name сохранено" . "\n");
 
                     }
                 }
