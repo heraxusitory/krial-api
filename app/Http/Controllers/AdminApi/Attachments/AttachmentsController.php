@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Attachments;
+namespace App\Http\Controllers\AdminApi\Attachments;
 
 use App\Http\Controllers\Controller;
 use App\Laravue\Models\Media\Attachment;
