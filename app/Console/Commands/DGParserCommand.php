@@ -63,7 +63,7 @@ class DGParserCommand extends Command
                 'description' => $brand->getBrandDescription(),
             ]);
 
-            $this->info('Производитель ДГУ: ' . $dg_manufacture->name . ' сохранен' . "\n");
+//            $this->info('Производитель ДГУ: ' . $dg_manufacture->name . ' сохранен' . "\n");
 
             foreach ($brand->getBrandProducts()->find('.manufacturer-products-table tr') as $row) {
                 $model = $row->find('td.cell-text-left > a.manufacturer-products-item__title');
