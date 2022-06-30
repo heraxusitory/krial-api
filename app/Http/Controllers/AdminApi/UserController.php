@@ -7,7 +7,7 @@
  * @version 1.0
  */
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\AdminApi;
 
 use App\Http\Resources\PermissionResource;
 use App\Http\Resources\UserResource;

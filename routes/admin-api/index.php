@@ -18,7 +18,7 @@ use \App\Laravue\Acl;
 |
 */
 
-Route::namespace('Api')->group(function() {
+Route::namespace('AdminApi')->group(function () {
     Route::post('auth/login', 'AuthController@login');
     Route::group(['middleware' => 'auth:sanctum'], function () {
         // Auth routes
@@ -37,8 +37,14 @@ Route::namespace('Api')->group(function() {
         // Custom routes
         Route::put('users/{user}', 'UserController@update');
         Route::get('users/{user}/permissions', 'UserController@permissions')->middleware('permission:' . Acl::PERMISSION_PERMISSION_MANAGE);
-        Route::put('users/{user}/permissions', 'UserController@updatePermissions')->middleware('permission:' .Acl::PERMISSION_PERMISSION_MANAGE);
+        Route::put('users/{user}/permissions', 'UserController@updatePermissions')->middleware('permission:' . Acl::PERMISSION_PERMISSION_MANAGE);
         Route::get('roles/{role}/permissions', 'RoleController@permissions')->middleware('permission:' . Acl::PERMISSION_PERMISSION_MANAGE);
+
+        Route::group(['prefix' => 'catalog'], function () {
+            Route::group(['prefix' => 'dg'], function () {
+                require 'catalog/dg/products.php';
+            });
+        });
     });
 });
 
