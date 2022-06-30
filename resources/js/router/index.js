@@ -89,14 +89,94 @@ export const constantRoutes = [
   {
     path: '/catalog',
     component: Layout,
+    alwaysShow: true,
+    name: 'Catalog',
+    meta: { title: 'catalog', icon: 'excel', noCache: false },
     children: [
       {
-        path: '',
-        name: 'Catalog',
-        meta: { title: 'catalog', icon: 'excel', noCache: false },
+        path: 'dgu',
+        name: 'Dgu',
+        redirect: 'noredirect',
+        meta: { title: 'dgu', icon: 'excel', noCache: false },
+        alwaysShow: true,
+        children: [
+          {
+            path: 'products',
+            name: 'DguProducts',
+            // component: () => import('@/views/dashboard/index'),
+            meta: { title: 'dg_products', icon: 'excel', noCache: false },
+          },
+        ],
       },
     ],
   },
+  // {
+  //   path: '/catalog',
+  //   component: Layout,
+  //   meta: { title: 'catalog', icon: 'excel', noCache: false },
+  //   children: [
+  //     {
+  //       path: 'dgu',
+  //       meta: { title: 'dgu', icon: 'excel', noCache: false },
+  //       children: [
+  //         {
+  //           path: 'products',
+  //           children: [
+  //             {
+  //               path: '',
+  //               meta: { title: 'dg_products', icon: 'excel', noCache: false },
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           path: 'properties',
+  //           children: [
+  //             {
+  //               path: '',
+  //               meta: { title: 'dg_properties', icon: 'excel', noCache: false },
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           path: 'property_groups',
+  //           children: [
+  //             {
+  //               path: '',
+  //               meta: { title: 'dg_property_groups', icon: 'excel', noCache: false },
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           path: 'versions',
+  //           children: [
+  //             {
+  //               path: '',
+  //               meta: { title: 'dg_versions', icon: 'excel', noCache: false },
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           path: 'manufacturers',
+  //           children: [
+  //             {
+  //               path: '',
+  //               meta: { title: 'dg_manufacturers', icon: 'excel', noCache: false },
+  //             },
+  //           ],
+  //         },
+  //         {
+  //           path: 'engine_manufacturers',
+  //           children: [
+  //             {
+  //               path: '',
+  //               meta: { title: 'dg_engine_manufacturers', icon: 'excel', noCache: false },
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     path: '/profile',
     component: Layout,
