@@ -97,13 +97,13 @@ export const constantRoutes = [
         path: 'dgu',
         name: 'Dgu',
         redirect: 'noredirect',
+        component: () => import('@/views/catalog/dg_products/List'),
         meta: { title: 'dgu', icon: 'excel', noCache: false },
         alwaysShow: true,
         children: [
           {
             path: 'products',
             name: 'DguProducts',
-            // component: () => import('@/views/dashboard/index'),
             meta: { title: 'dg_products', icon: 'excel', noCache: false },
           },
         ],
