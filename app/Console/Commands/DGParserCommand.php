@@ -98,7 +98,7 @@ class DGParserCommand extends Command
                         'allgen_vendor_code' => $allgen_vendor_code,
                         'allgen_url' => $url_allgen,
                     ]);
-                $this->info('Продукт ДГУ: ' . $dg_product_model->name . ' сохранен' . "\n");
+//                $this->info('Продукт ДГУ: ' . $dg_product_model->name . ' сохранен' . "\n");
                 if (count($brand_product_parser->find('.product-variants-row')[0]->children) > 5) {
                     Log::debug('Существует более 5 вариаций исполнения: ' . $url_allgen);
                 }
@@ -152,10 +152,10 @@ class DGParserCommand extends Command
 
                     foreach ($block->find('.product-stats-block-list')[0]->children as $property) {
                         $desc_target = $property->find('.product-stats-item__title > a');
+                        $description = null;
                         if (!empty($desc_target)) {
-                            $desc_targe_value = $desc_target[0]->getAttribute('data-remodal-target');
-                            $description = $brand_product_parser->find("[data-remodal-id=$desc_targe_value] p")[0]->innertext();
-//                    dump($desc_target, $desc_targe_value, $description);
+                            $desc_target_value = $desc_target[0]->getAttribute('data-remodal-target');
+                            $description = $brand_product_parser->find("[data-remodal-id=\"$desc_target_value\"] p")[0]->innertext();
                         }
                         $property_name = $property->first_child()->innertext();
                         $property_name = trim(preg_replace("/[;].*$|&nbsp/", '', $property_name));
@@ -176,7 +176,6 @@ class DGParserCommand extends Command
 //                            $this->info("Производитель двигателя {$engine_manufacture->name} для продукта ДГУ: $dg_product_model->name сохранен" . "\n");
                         }
 
-//                    dump('ПОсле ' . $prop_value);
                         $property = Property::updateOrCreate([
                             'code' => Str::slug($property_name)
                         ], [
