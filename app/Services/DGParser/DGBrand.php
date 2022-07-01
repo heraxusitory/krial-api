@@ -9,7 +9,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 class DGBrand
 {
-    public \simplehtmldom_1_5\simple_html_dom $brand_products_parser;
+    public $brand_products_parser;
     private string $brand_description;
 
     public function __construct(private $name, private $country, private $products_link)
