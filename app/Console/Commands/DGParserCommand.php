@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Laravue\Models\Media\Attachment;
 use App\Models\Catalog\DG\DGProduct;
 use App\Models\Catalog\DG\DGTradingOption;
 use App\Models\Property;
@@ -13,6 +14,7 @@ use App\Models\References\DGVersion;
 use App\Services\DGParser\DGParser;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Sunra\PhpSimple\HtmlDomParser;
@@ -108,31 +110,69 @@ class DGParserCommand extends Command
                 $version_images = $brand_product_parser->find('.product-variants-row > .product-variants-col > img');
                 $dg_version_open = DGVersion::where('code', DGVersion::VERSION_OPEN())->firstOrFail();
 //            dd($version_images[0]->name);
-                $trading_option = DGTradingOption::query()->updateOrCreate(
+                $trading_option_0 = DGTradingOption::query()->updateOrCreate(
                     [
                         'dg_product_id' => $dg_product_model->id,
                         'dg_version_id' => $dg_version_open->id
-                    ],
+                    ]/*,
                     [
                         'media' => json_encode([
                             $version_images[0]->name
                         ])
-                    ]);
-
+                    ]*/);
+                $trading_option_0->file_url = $version_images[0]->name;
 //                $this->info('Торговое предложение ОТКРЫТОГО ТИПА для продукта ДГУ: ' . $dg_product_model->name . ' сохранено' . "\n");
 
                 $dg_version_in_case = DGVersion::where('code', DGVersion::VERSION_IN_CASE())->firstOrFail();
 
-                DGTradingOption::query()->updateOrCreate(
+                $trading_option_1 = DGTradingOption::query()->updateOrCreate(
                     [
                         'dg_product_id' => $dg_product_model->id,
                         'dg_version_id' => $dg_version_in_case->id
-                    ],
-                    [
-                        'media' => json_encode([
-                            $version_images[1]->name
-                        ])
-                    ]);
+                    ]
+                /*[
+                    'media' => json_encode([
+                        $version_images[1]->name
+                    ])
+                ]*/);
+                $trading_option_1->file_url = $version_images[1]->name;
+
+                $trading_options = [
+                    $trading_option_0,
+                    $trading_option_1
+                ];
+
+                foreach ($trading_options as $trading_option) {
+
+                    $now = now();
+                    $pathName = $now->year . '/' . $now->month . '/' . $now->day;
+                    $file_content = file_get_contents($trading_option->file_url);
+//                dump($version_images[0]->name);
+                    $temp = tmpfile();
+                    $metadata = stream_get_meta_data($temp);
+                    fwrite($temp, $file_content);
+                    $stateHash = md5_file($metadata['uri']);
+//                $file = new File($metadata['uri']);
+                    $file = new UploadedFile($metadata['uri'], basename($metadata['uri']));
+//                dd($file);
+
+//                dd((new File())->getName());
+                    $attachment = Attachment::query()->where('state_hash', $stateHash)->first();
+
+                    if (is_null($attachment)) {
+                        $attachment = Attachment::query()->firstOrCreate([
+                            'state_hash' => $stateHash,
+                            'name' => $file->hashName(),
+                            'dir_path' => $pathName,
+                            'ext' => $file->extension(),
+                            'alt' => ''
+                        ]);
+
+                        $file->store($pathName, 'public');
+                    }
+
+                    $trading_option->attachments()->sync([$attachment->id]);
+                }
 
 //                $this->info('Торговое предложение В КОЖУХЕ для продукта ДГУ: ' . $dg_product_model->name . ' сохранено' . "\n");
 

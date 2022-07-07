@@ -25,8 +25,8 @@ class CreateDgProductsTable extends Migration
             $table->unsignedBigInteger('engine_manufacture_id')->nullable();
 //            $table->json('media')->nullable();
             $table->text('description')->nullable();
-            $table->string('internal_vendor_code')->nullable();
-            $table->string('allgen_vendor_code')->nullable();
+            $table->string('internal_vendor_code')->unique()->nullable();
+            $table->string('allgen_vendor_code')->unique()->nullable();
             $table->string('allgen_url')->nullable();
             $table->string('provider_vendor_code')->nullable();
             $table->timestamps();
