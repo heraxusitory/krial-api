@@ -15,7 +15,7 @@ import Layout from '@/layout';
 /* Router for modules */
 // import adminRoutes from './modules/admin';
 import errorRoutes from './modules/error';
-import nestedRoutes from './modules/nested';
+// import nestedRoutes from './modules/nested';
 // import permissionRoutes from './modules/permission';
 
 /**
@@ -222,7 +222,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
   // permissionRoutes, TODO: пока что не нужны
   // adminRoutes, // TODO: пока что не нужен
-  nestedRoutes,
+  // nestedRoutes,
   errorRoutes,
   { path: '*', redirect: '/404', hidden: true },
 ];
