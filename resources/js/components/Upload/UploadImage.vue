@@ -5,6 +5,7 @@
         _token: csrf.token,
       }"
       :multiple="multi"
+      :on-preview="handlePreview"
       :show-file-list="multi"
       :file-list="valueCollection"
       :on-remove="handleRemove"
@@ -36,6 +37,12 @@
     <!--        </div>-->
     <!--      </div>-->
     <!--    </div>-->
+    <el-dialog
+      :visible.sync="isImgSelected"
+      width="60%"
+    >
+      <img :src="currentImgUrl" alt="" width="100%">
+    </el-dialog>
   </div>
 </template>
 
@@ -58,6 +65,8 @@ export default {
     return {
       tempUrl: '',
       additionalData: {},
+      currentImgUrl: '',
+      isImgSelected: false,
     };
   },
   computed: {
@@ -70,6 +79,11 @@ export default {
     },
   },
   methods: {
+    handlePreview(file) {
+      // window.open(file.url, '_blank');
+      this.currentImgUrl = file.url;
+      this.isImgSelected = true;
+    },
     rmImage(id) {
       this.$emit('remove', id);
     },
