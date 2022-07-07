@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminApi\Attachments\AttachmentsController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,9 +19,12 @@ use \App\Laravue\Acl;
 |
 */
 
-Route::namespace('AdminApi')->group(function () {
+$role_editor = Acl::ROLE_EDITOR;
+$role_admin = Acl::ROLE_ADMIN;
+
+Route::namespace('AdminApi')->group(function () use ($role_editor, $role_admin) {
     Route::post('auth/login', 'AuthController@login');
-    Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::group(['middleware' => 'auth:sanctum'], function () use ($role_admin, $role_editor) {
         // Auth routes
         Route::get('auth/user', 'AuthController@user');
         Route::post('auth/logout', 'AuthController@logout');
@@ -28,6 +32,11 @@ Route::namespace('AdminApi')->group(function () {
         Route::get('/user', function (Request $request) {
             return new UserResource($request->user());
         });
+
+        Route::prefix('attachments')->namespace('Attachments')
+            ->middleware("role:{$role_editor}|{$role_admin}")->group(function() {
+                Route::post('save', [AttachmentsController::class, 'save']);
+            });
 
         // Api resource routes
         Route::apiResource('roles', 'RoleController')->middleware('permission:' . Acl::PERMISSION_PERMISSION_MANAGE);
@@ -43,6 +52,10 @@ Route::namespace('AdminApi')->group(function () {
         Route::group(['prefix' => 'catalog'], function () {
             Route::group(['prefix' => 'dg'], function () {
                 require 'catalog/dg/products.php';
+                require 'catalog/dg/manufacturers.php';
+                require 'catalog/dg/engine_manufacturers.php';
+                require 'catalog/dg/versions.php';
+                require 'catalog/dg/traiding_options.php';
             });
         });
     });

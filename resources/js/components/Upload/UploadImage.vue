@@ -11,6 +11,7 @@
       :on-success="handleImageSuccess"
       :on-error="handleError"
       class="image-uploader"
+      list-type="picture"
       drag
       :action="actionUrl"
     >
@@ -21,12 +22,20 @@
     </el-upload>
     <div v-if="!multi && valueCollection.length > 0" class="image-preview image-app-preview">
       <div class="image-preview-wrapper">
-        <img :src="valueCollection[0].full" alt="">
+        <img :src="valueCollection[0].url" alt="">
         <div class="image-preview-action">
           <i class="el-icon-delete" @click="rmImage" />
         </div>
       </div>
     </div>
+    <!--    <div v-if="true && valueCollection.length > 0" class="image-preview image-app-preview">-->
+    <!--      <div v-for="(value, key) in valueCollection" :key="key" class="image-preview-wrapper">-->
+    <!--        <img :src="value.url" alt="">-->
+    <!--        <div class="image-preview-action">-->
+    <!--          <i class="el-icon-delete" @click="rmImage" />-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </template>
 

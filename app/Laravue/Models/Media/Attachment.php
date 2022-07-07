@@ -12,4 +12,9 @@ class Attachment extends Model
     {
         return config('app.url') . '/storage/' . $this->dir_path . '/' . $this->name;
     }
+
+    public function get()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
 }

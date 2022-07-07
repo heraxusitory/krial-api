@@ -21,6 +21,8 @@ class CreateDgProductsTable extends Migration
             $table->string('series_id')->nullable();
             $table->bigInteger('sort')->default(100);
             $table->boolean('is_active')->default(false);
+            $table->unsignedBigInteger('manufacture_id');
+            $table->unsignedBigInteger('engine_manufacture_id')->nullable();
 //            $table->json('media')->nullable();
             $table->text('description')->nullable();
             $table->string('internal_vendor_code')->nullable();

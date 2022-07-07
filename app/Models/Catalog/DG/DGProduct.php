@@ -18,6 +18,8 @@ class DGProduct extends Model
         'series',
         'sort',
         'is_active',
+        'manufacture_id',
+        'engine_manufacture_id',
         'media',
         'description',
         'internal_vendor_code',
@@ -37,5 +39,10 @@ class DGProduct extends Model
                     ->where('property_values.elementable_type', DGProduct::class);
             });*/
 //            ->where('elementable_type', DGProduct::class);
+    }
+
+    public function traiding_options()
+    {
+        return $this->hasMany(DGTradingOption::class, 'dg_product_id', 'id');
     }
 }

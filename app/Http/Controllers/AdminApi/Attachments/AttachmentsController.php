@@ -46,7 +46,7 @@ class AttachmentsController extends Controller
                 $file->store($pathName, 'public');
             }
 
-            $attachment->full = $attachment->getUrl();
+            $attachment->url = $attachment->getUrl();
             $full_paths[] = $attachment;
         }
 

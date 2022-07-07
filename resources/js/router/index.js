@@ -15,6 +15,7 @@ import Layout from '@/layout';
 /* Router for modules */
 // import adminRoutes from './modules/admin';
 import errorRoutes from './modules/error';
+import nestedRoutes from './modules/nested';
 // import permissionRoutes from './modules/permission';
 
 /**
@@ -90,24 +91,49 @@ export const constantRoutes = [
     path: '/catalog',
     component: Layout,
     alwaysShow: true,
+    // redirect: 'noredirect',
     name: 'Catalog',
     meta: { title: 'catalog', icon: 'excel', noCache: false },
     children: [
       {
         path: 'dgu',
         name: 'Dgu',
-        redirect: 'noredirect',
-        component: () => import('@/views/catalog/dg_products/List'),
+        // redirect: 'noredirect',
         meta: { title: 'dgu', icon: 'excel', noCache: false },
         alwaysShow: true,
+        // component: () => import('@/views/catalog/dg/products/List'),
+        component: () => import('@/views/catalog/dg/Index'),
         children: [
           {
             path: 'products',
             name: 'DguProducts',
+            component: () => import('@/views/catalog/dg/products/List'),
             meta: { title: 'dg_products', icon: 'excel', noCache: false },
           },
+          {
+            path: 'products/edit/:id?',
+            name: 'DguProductEdit',
+            component: () => import('@/views/catalog/dg/products/Edit'),
+            meta: { title: 'dg_product_edit', icon: 'excel', noCache: false },
+            hidden: true,
+          },
+          // {
+          //   path: 'products2',
+          //   name: 'DguProducts2',
+          //   component: () => import('@/views/catalog/dg/products/List'),
+          //   meta: { title: 'products2', icon: 'excel', noCache: false },
+          // },
         ],
       },
+      // {
+      //   path: 'dgu2',
+      //   name: 'Dgu2',
+      //   redirect: 'noredirect',
+      //   meta: { title: 'dgu2', icon: 'excel', noCache: false },
+      //   // alwaysShow: true,
+      //   // component: () => import('@/views/catalog/dg/products/List'),
+      //   // component: () => import('@/views/catalog/dg/Index'),
+      // },
     ],
   },
   // {
@@ -196,6 +222,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
   // permissionRoutes, TODO: пока что не нужны
   // adminRoutes, // TODO: пока что не нужен
+  nestedRoutes,
   errorRoutes,
   { path: '*', redirect: '/404', hidden: true },
 ];

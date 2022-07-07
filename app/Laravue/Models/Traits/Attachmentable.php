@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Laravue\Traits;
+namespace App\Laravue\Models\Traits;
 
 
 use App\Laravue\Models\Media\Attachment;

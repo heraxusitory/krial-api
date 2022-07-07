@@ -1,30 +1,33 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <AbstractTable
-        :data="data"
-        :with-actions="true"
-        :target="'dg/products'"
-        :is-on-load="isLoad"
-        :columns="[
-          { name: 'ID', key: 'id', width: 65, align: 'center' },
-          { name: 'Имя', key: 'name', minWidth: '100px',/* render: (banner) => banner.type.name*/ },
-          { name: 'Брендированное имя', key: 'title', minWidth: '40px' },
-          { name: 'Код', key: 'code', minWidth: '40px' },
-          { name: 'Сортировка', key: 'sort', minWidth: '50px' },
-          { name: 'Активный', key: 'is_active', minWidth: '30px', render: (item) => {return item.is_active? 'Да' : 'Нет'} },
-          { name: 'Артикул Allgen', key: 'allgen_vendor_code', minWidth: '30px', },
-        ]"
-        @delete="handleDelete"
-      />
-      <pagination
-        v-show="query.total>0"
-        :total="query.total"
-        :page.sync="query.page"
-        :limit.sync="query.limit"
-        @pagination="setList"
-      />
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        {{ $t('table.add') }}
+      </el-button>
     </div>
+    <AbstractTable
+      :data="data"
+      :with-actions="true"
+      :target="'catalog/dgu/products'"
+      :is-on-load="isLoad"
+      :columns="[
+        { name: 'ID', key: 'id', width: 65, align: 'center' },
+        { name: 'Имя', key: 'name', minWidth: '100px',/* render: (banner) => banner.type.name*/ },
+        { name: 'Брендированное имя', key: 'title', minWidth: '40px' },
+        { name: 'Код', key: 'code', minWidth: '40px' },
+        { name: 'Сортировка', key: 'sort', minWidth: '50px' },
+        { name: 'Активный', key: 'is_active', minWidth: '30px', render: (item) => {return item.is_active? 'Да' : 'Нет'} },
+        { name: 'Артикул Allgen', key: 'allgen_vendor_code', minWidth: '30px', },
+      ]"
+      @delete="handleDelete"
+    />
+    <pagination
+      v-show="query.total>0"
+      :total="query.total"
+      :page.sync="query.page"
+      :limit.sync="query.limit"
+      @pagination="setList"
+    />
   </div>
 </template>
 
@@ -48,10 +51,12 @@ export default {
     };
   },
   created() {
-    console.log(32323232);
     this.setList();
   },
   methods: {
+    handleCreate() {
+      this.$router.push({ name: 'DguProductEdit' });
+    },
     async handleDelete(payload) {
       try {
         await (new DgProductResource()).destroy(payload.id);
@@ -71,7 +76,6 @@ export default {
     },
     async setList() {
       this.isLoad = true;
-      console.log(111);
       try {
         const response = await this.getList();
         const { meta } = response;

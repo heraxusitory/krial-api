@@ -91,6 +91,8 @@ class DGParserCommand extends Command
                 ],
                     [
                         'name' => $product_name,
+                        'manufacture_id' => $dg_manufacture->id,
+//                        'engine_manufacture_id' => ,
 //                   'second_name',
 //                   'series_id',
 //                   'sort',
@@ -173,6 +175,8 @@ class DGParserCommand extends Command
                                 'name' => $prop_value,
                                 'country' => $engine_country
                             ]);
+                            $dg_product_model->engine_manufacture_id = $engine_manufacture->id;
+                            $dg_product_model->save();
 //                            $this->info("Производитель двигателя {$engine_manufacture->name} для продукта ДГУ: $dg_product_model->name сохранен" . "\n");
                         }
 
