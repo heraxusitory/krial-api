@@ -12,11 +12,13 @@
       :is-on-load="isLoad"
       :columns="[
         { name: 'ID', key: 'id', width: 65, align: 'center' },
-        { name: 'Имя', key: 'name', minWidth: '100px',/* render: (banner) => banner.type.name*/ },
-        { name: 'Брендированное имя', key: 'title', minWidth: '40px' },
+        { name: 'Имя', key: 'name', minWidth: '50px',/* render: (banner) => banner.type.name*/ },
+        { name: 'Производитель', key: 'manufacture_name', minWidth: '40px' },
+        { name: 'Двигатель', key: 'engine_manufacture_name', minWidth: '20px' },
+        { name: 'Бренд', key: 'title', minWidth: '20px' },
         { name: 'Код', key: 'code', minWidth: '40px' },
-        { name: 'Сортировка', key: 'sort', minWidth: '50px' },
-        { name: 'Активный', key: 'is_active', minWidth: '30px', render: (item) => {return item.is_active? 'Да' : 'Нет'} },
+        { name: 'Сортировка', key: 'sort', minWidth: '25px' },
+        { name: 'Актив', key: 'is_active', minWidth: '20px', render: (item) => {return item.is_active? 'Да' : 'Нет'} },
         { name: 'Артикул Allgen', key: 'allgen_vendor_code', minWidth: '30px', },
       ]"
       @delete="handleDelete"

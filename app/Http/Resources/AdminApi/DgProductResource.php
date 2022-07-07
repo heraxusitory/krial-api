@@ -14,6 +14,8 @@ class DgProductResource extends JsonResource
             'name' => $this->name,
             'code' => $this->code,
             'second_name' => $this->second_name,
+            'manufacture_name' => $this->manufacture->name,
+            'engine_manufacture_name' => $this->engine_manufacture->name,
             'sort' => $this->sort,
             'is_active' => $this->is_active,
             'description' => $this->description,

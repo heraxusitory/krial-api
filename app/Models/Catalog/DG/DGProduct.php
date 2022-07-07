@@ -6,6 +6,8 @@ namespace App\Models\Catalog\DG;
 
 use App\Models\Property;
 use App\Models\PropertyValue;
+use App\Models\References\DGEngineManufacture;
+use App\Models\References\DGManufacture;
 use Illuminate\Database\Eloquent\Model;
 
 class DGProduct extends Model
@@ -44,5 +46,15 @@ class DGProduct extends Model
     public function traiding_options()
     {
         return $this->hasMany(DGTradingOption::class, 'dg_product_id', 'id');
+    }
+
+    public function manufacture()
+    {
+        return $this->hasOne(DGManufacture::class, 'id', 'manufacture_id');
+    }
+
+    public function engine_manufacture()
+    {
+        return $this->hasOne(DGEngineManufacture::class, 'id', 'engine_manufacture_id');
     }
 }
