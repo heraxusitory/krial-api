@@ -15,7 +15,7 @@
           :key="version.id"
           :label="version.name"
           :value="version.id"
-          :disabled="disabled_dg_version_ids.includes(version.id)"
+          :disabled="disabledDgVersionIds.includes(version.id)"
         >{{ version.name }}
         </el-option>
       </el-select>
@@ -51,6 +51,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    disabledDgVersionIds: {
+      type: Array,
+      default: () => [],
+    },
   // traiding_options: {
   //   type: Array,
   //   default: () => [],
@@ -58,14 +62,14 @@ export default {
   },
   data() {
     return {
-      disabled_dg_version_ids: [],
+      // disabled_dg_version_ids: [],
     };
   },
   methods: {
     imgHook(payload, key) {
-      console.log('imgHook', payload);
+      // console.log('imgHook', payload);
       // console.log('payload', payload);
-      console.log('traid_option', this.traidingOption);
+      // console.log('traid_option', this.traidingOption);
       this.traidingOption.attachments.push(payload);
       this.traidingOption.attachment_ids = this.traidingOption.attachments.map(item => item.id);
       // console.log(this.traidingOption.image_ids);

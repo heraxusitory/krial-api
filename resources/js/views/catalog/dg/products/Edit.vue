@@ -85,7 +85,15 @@
               Добавить
             </el-button>
           </el-form-item>
-          <VersionCard v-for="option in form.traiding_options" :key="option.id" :traiding-option="option" :dg-versions="dg_versions" @remove="removeCard" />
+          <VersionCard
+            v-for="option in form.traiding_options"
+            :key="option.id"
+            :traiding-option="option"
+            :dg-versions="dg_versions"
+            :disabled-dg-version-ids="disabled_dg_version_ids"
+            @changeVersion="changeVersion"
+            @remove="removeCard"
+          />
         </el-tab-pane>
         <el-tab-pane label="Характеристки" name="characteristics" />
       </el-tabs>
@@ -164,14 +172,16 @@ export default {
     // },
     changeVersion() {
       this.disabled_dg_version_ids = [];
+      console.log(this.form.traiding_options);
       for (const option of this.form.traiding_options) {
         this.disabled_dg_version_ids.push(option.version.id);
       }
+      console.log('change_version', this.disabled_dg_version_ids);
     },
 
     addNewCard() {
       if (this.form.traiding_options.length < this.dg_versions.length) {
-        this.form.traiding_options.push({
+        this.form.traiding_options.unshift({
           price: '',
           attachments: [],
           version: {
@@ -185,6 +195,7 @@ export default {
       console.log(key);
       const idx = this.form.traiding_options.findIndex(item => item.id === key);
       this.form.traiding_options.splice(idx, 1);
+      this.changeVersion();
     },
 
     async submit() {
@@ -270,13 +281,13 @@ export default {
           const { data } = await (new DgProductResource()).get(this.$route.params.id);
           this.wasRecentlyCreated = true;
 
-          this.changeVersion();
           this.id = data.id;
           for (const key in this.form) {
             if (data.hasOwnProperty(key)) {
               this.form[key] = data[key];
             }
           }
+          this.changeVersion();
           console.log(data);
         }
         console.log(this.form.traiding_options);
