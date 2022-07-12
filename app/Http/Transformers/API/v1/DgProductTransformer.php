@@ -26,6 +26,7 @@ class DgProductTransformer extends TransformerAbstract
             return $attachment->getUrl();
         });
         return [
+            'id' => $product->id,
             'name' => $product->name,
             'code' => $product->code,
             'price' => $first_traiding_option->price,

@@ -12,6 +12,7 @@ class DgEngineManufactureTransformer extends TransformerAbstract
     public function transform(DGEngineManufacture $engine_manufacture)
     {
         return [
+            'id' => $engine_manufacture->id,
             'name' => $engine_manufacture->name,
             'code' => $engine_manufacture->code,
             'country' => $engine_manufacture->country,

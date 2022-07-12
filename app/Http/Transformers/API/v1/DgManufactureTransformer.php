@@ -12,6 +12,7 @@ class DgManufactureTransformer extends TransformerAbstract
     public function transform(DGManufacture $manufacture)
     {
         return [
+            'id' => $manufacture->id,
             'name' => $manufacture->name,
             'code' => $manufacture->code,
             'country' => $manufacture->country,
