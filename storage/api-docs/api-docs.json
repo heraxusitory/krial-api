@@ -1,0 +1,58 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "KRIAL API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1"
+        }
+    ],
+    "paths": {
+        "/catalog/dg": {
+            "get": {
+                "tags": [
+                    "Дизельные генераторы"
+                ],
+                "summary": "Получить список ДГУ",
+                "operationId": "a519794329a9dc0d6f4b81cc9970f0a4",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/catalog/dg/{dg_product_id}": {
+            "get": {
+                "tags": [
+                    "Дизельные генераторы"
+                ],
+                "summary": "Получить элемент из списка ДГУ",
+                "operationId": "64f47de2d07e732c93fe5ce60c9a223d",
+                "parameters": [
+                    {
+                        "name": "dg_product_id",
+                        "in": "path",
+                        "description": "Уникальный идентификатор элемента списка ДГУ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        }
+    }
+}

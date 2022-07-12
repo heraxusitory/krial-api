@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Models\DG;
+namespace App\Models\Catalog\DG;
 
 
 use Illuminate\Database\Eloquent\Model;

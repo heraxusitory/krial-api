@@ -6,7 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Property extends  Model
+class Property extends Model
 {
     protected $table = 'properties';
 
@@ -20,5 +20,10 @@ class Property extends  Model
     public function value()
     {
         return $this;
+    }
+
+    public function group()
+    {
+        return $this->hasOne(PropertyGroup::class, 'id', 'property_group_id');
     }
 }
