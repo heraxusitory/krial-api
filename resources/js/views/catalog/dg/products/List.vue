@@ -35,7 +35,7 @@
 
 <script>
 import AbstractTable from '@/components/AbstractTable/AbstractTable';
-import DgProductResource from '@/api/dg_product';
+import DgProductResource from '@/api/catalog/dg/dg_product';
 import Pagination from '@/components/Pagination/index';
 export default {
   name: 'DguProductList',

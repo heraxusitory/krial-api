@@ -16,19 +16,23 @@ class DgProductController extends Controller
 {
     public function index(Request $request)
     {
-        $products = DGProduct::query()->orderByDesc('id')->paginate($request->limit);
+        $products = DGProduct::query()
+            ->orderByDesc('id')
+            ->with(['engine_manufacture', 'manufacture',])
+            ->paginate($request->limit);
         return DgProductResource::collection($products);
     }
 
     public function get(Request $request, $product_id)
     {
-        $product = DGProduct::query()->with(['traiding_options.version'])->findOrFail($product_id);
-        foreach ($product->traiding_options as $traiding_option) {
-            foreach ($traiding_option->attachments as $attachment) {
-                $attachment->url = $attachment->getUrl();
-            }
-        }
-        return response()->json(['data' => $product]);
+        $product = DGProduct::query()->with(['traiding_options.version', 'properties'])->findOrFail($product_id);
+//        dd($product->properties->toArray());
+//        foreach ($product->traiding_options as $traiding_option) {
+//            foreach ($traiding_option->attachments as $attachment) {
+//                $attachment->url = $attachment->getUrl();
+//            }
+//        }
+        return DgProductResource::make($product);
     }
 
     public function create(Request $request)

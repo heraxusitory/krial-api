@@ -56,6 +56,7 @@ Route::namespace('AdminApi')->group(function () use ($role_editor, $role_admin) 
                 require 'catalog/dg/engine_manufacturers.php';
                 require 'catalog/dg/versions.php';
                 require 'catalog/dg/traiding_options.php';
+                require 'catalog/dg/properties.php';
             });
         });
     });

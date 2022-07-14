@@ -220,11 +220,12 @@ class DGParserCommand extends Command
 //                            $this->info("Производитель двигателя {$engine_manufacture->name} для продукта ДГУ: $dg_product_model->name сохранен" . "\n");
                         }
 
+
                         $property = Property::updateOrCreate([
-                            'code' => Str::slug($property_name)
+                            'code' => Str::slug($property_name . '_' . $group_model->id),
+                            'property_group_id' => $group_model->id,
                         ], [
                             'name' => $property_name,
-                            'property_group_id' => $group_model->id,
                             'description' => $description ?? null,
                         ]);
 

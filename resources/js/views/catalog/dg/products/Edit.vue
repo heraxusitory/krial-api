@@ -95,7 +95,9 @@
             @remove="removeCard"
           />
         </el-tab-pane>
-        <el-tab-pane label="Характеристки" name="characteristics" />
+        <el-tab-pane label="Характеристки" name="characteristics">
+          <PropertyGroupCollapse :property-groups="form.property_groups" />
+        </el-tab-pane>
       </el-tabs>
 
       <el-form-item>
@@ -108,24 +110,20 @@
 
 <script>
 import Loader from '@/components/Loader/Loader';
-import DgManufactureResource from '@/api/dg_manufacture';
-import DgEngineManufactureResource from '@/api/dg_engine_manufacture';
-import DgProductResource from '@/api/dg_product';
-import DgVersionResource from '@/api/dg_version';
+import DgManufactureResource from '@/api/catalog/dg/dg_manufacture';
+import DgEngineManufactureResource from '@/api/catalog/dg/dg_engine_manufacture';
+import DgProductResource from '@/api/catalog/dg/dg_product';
+import DgVersionResource from '@/api/catalog/dg/dg_version';
 import VersionCard from '@/views/catalog/dg/products/components/VersionCard';
+import PropertyGroupCollapse from '@/views/catalog/dg/products/components/PropertyGroupCollapse';
 import helpers from '@/vendor/helpers';
-// import DgTraidingOptionResource from '@/api/dg_traiding_option';
 
 export default {
   name: 'DguProductEdit',
-  components: { VersionCard, Loader },
+  components: { VersionCard, Loader, PropertyGroupCollapse },
   data() {
     return {
       id: null,
-      // allow_fields: {
-      //   name:
-      // },
-      // test_code: '',
       activeTab: 'main',
       requestSend: false,
       wasRecentlyCreated: false,
@@ -133,8 +131,8 @@ export default {
       dg_manufacturers: [],
       dg_engine_manufacturers: [],
       dg_versions: [],
+      dg_properties: [],
       disabled_dg_version_ids: [],
-      // dg_traiding_options: [],
       form: {
         name: '',
         code: '',
@@ -144,6 +142,7 @@ export default {
         second_name: '',
         is_active: false,
         traiding_options: [],
+        property_groups: [],
         description: '',
         internal_vendor_code: '',
       },
@@ -172,11 +171,9 @@ export default {
     // },
     changeVersion() {
       this.disabled_dg_version_ids = [];
-      console.log(this.form.traiding_options);
       for (const option of this.form.traiding_options) {
         this.disabled_dg_version_ids.push(option.version.id);
       }
-      console.log('change_version', this.disabled_dg_version_ids);
     },
 
     addNewCard() {
@@ -267,6 +264,10 @@ export default {
       const { data } = await (new DgManufactureResource()).list();
       this.dg_manufacturers = data;
     },
+    // async fetchDgProperties() {
+    //   const { data } = await (new DgPropertyResource()).list();
+    //   this.dg_properties = data;
+    // },
     async fetchDgEngineManufactures() {
       const { data } = await (new DgEngineManufactureResource()).list();
       this.dg_engine_manufacturers = data;
@@ -277,6 +278,7 @@ export default {
         await this.fetchDgManufactures();
         await this.fetchDgEngineManufactures();
         await this.fetchDgVersions();
+        // await this.fetchDgProperties();
         if (this.$route.params.id) {
           const { data } = await (new DgProductResource()).get(this.$route.params.id);
           this.wasRecentlyCreated = true;
@@ -287,10 +289,15 @@ export default {
               this.form[key] = data[key];
             }
           }
+          // this.form.property_groups = _.groupBy(data.properties, (item) => {
+          //   if (item.group.id === 46) {
+          //     console.log(46);
+          //   }
+          //   return item.group.name;
+          // });
+          console.log(this.form.property_groups);
           this.changeVersion();
-          console.log(data);
         }
-        console.log(this.form.traiding_options);
       } catch (e) {
         console.log(e);
         this.$router.push({ name: 'Page404' });

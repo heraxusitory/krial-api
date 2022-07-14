@@ -5,14 +5,19 @@ namespace App\Models\Catalog\DG;
 
 
 use App\Models\Property;
+use App\Models\PropertyGroup;
 use App\Models\PropertyValue;
 use App\Models\References\DGEngineManufacture;
 use App\Models\References\DGManufacture;
+use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
 
 class DGProduct extends Model
 {
     protected $table = 'dg_products';
+
+    protected $properties = [];
+
     protected $fillable = [
         'name',
         'second_name',
@@ -41,6 +46,19 @@ class DGProduct extends Model
                     ->where('property_values.elementable_type', DGProduct::class);
             });*/
 //            ->where('elementable_type', DGProduct::class);
+    }
+
+    public function propertyGroupsWithProperties()
+    {
+        $property_groups = PropertyGroup::all();
+        foreach ($property_groups as $key => $property_group) {
+            if ($properties = $this->properties()->where('property_group_id', $property_group->id)->get()) {
+                $property_group->properties = $properties;
+            } else {
+                unset($property_groups[$key]);
+            }
+        }
+        return $property_groups;
     }
 
     public function traiding_options()
