@@ -144,34 +144,35 @@ class DGParserCommand extends Command
 
                 foreach ($trading_options as $trading_option) {
 
-                    $now = now();
-                    $pathName = $now->year . '/' . $now->month . '/' . $now->day;
-                    $file_content = file_get_contents($trading_option->file_url);
-//                dump($version_images[0]->name);
-                    $temp = tmpfile();
-                    $metadata = stream_get_meta_data($temp);
-                    fwrite($temp, $file_content);
-                    $stateHash = md5_file($metadata['uri']);
-//                $file = new File($metadata['uri']);
-                    $file = new UploadedFile($metadata['uri'], basename($metadata['uri']));
-//                dd($file);
+                    try {
+                        $now = now();
+                        $pathName = $now->year . '/' . $now->month . '/' . $now->day;
+                        $file_content = file_get_contents($trading_option->file_url);
+                        $temp = tmpfile();
+                        $metadata = stream_get_meta_data($temp);
+                        fwrite($temp, $file_content);
+                        $stateHash = md5_file($metadata['uri']);
+                        $file = new UploadedFile($metadata['uri'], basename($metadata['uri']));
 
-//                dd((new File())->getName());
-                    $attachment = Attachment::query()->where('state_hash', $stateHash)->first();
+                        $attachment = Attachment::query()->where('state_hash', $stateHash)->first();
 
-                    if (is_null($attachment)) {
-                        $attachment = Attachment::query()->firstOrCreate([
-                            'state_hash' => $stateHash,
-                            'name' => $file->hashName(),
-                            'dir_path' => $pathName,
-                            'ext' => $file->extension(),
-                            'alt' => ''
-                        ]);
+                        if (is_null($attachment)) {
+                            $attachment = Attachment::query()->firstOrCreate([
+                                'state_hash' => $stateHash,
+                                'name' => $file->hashName(),
+                                'dir_path' => $pathName,
+                                'ext' => $file->extension(),
+                                'alt' => ''
+                            ]);
 
-                        $file->store($pathName, 'public');
+                            $file->store($pathName, 'public');
+                        }
+
+                        $trading_option->attachments()->sync([$attachment->id]);
+                    } catch (\Exception $e) {
+                        Log::error('Не удалось сохранить медиа для продукта ' . $dg_product_model->id . ' ' . $dg_product_model->name);
+                        Log::error($e->getMessage(), [$e->getTrace()]);
                     }
-
-                    $trading_option->attachments()->sync([$attachment->id]);
                 }
 
 //                $this->info('Торговое предложение В КОЖУХЕ для продукта ДГУ: ' . $dg_product_model->name . ' сохранено' . "\n");
