@@ -187,6 +187,7 @@ class DGParserCommand extends Command
 //                dump($group_name);
                     $group_model = PropertyGroup::query()->updateOrCreate([
                         'name' => $group_name,
+                        'code' => Str::slug($group_name),
                     ]);
 
 //                    $this->info("Группа свойств {$group_model->name} для продукта ДГУ: $dg_product_model->name сохранена" . "\n");

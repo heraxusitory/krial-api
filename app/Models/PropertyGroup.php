@@ -12,5 +12,6 @@ class PropertyGroup extends Model
 
     protected $fillable = [
         'name',
+        'code',
     ];
 }

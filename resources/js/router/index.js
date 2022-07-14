@@ -117,6 +117,18 @@ export const constantRoutes = [
             meta: { title: 'dg_product_edit', icon: 'excel', noCache: false },
             hidden: true,
           },
+          {
+            path: 'property_groups',
+            name: 'DguPropertyGroups',
+            component: () => import('@/views/catalog/dg/property_groups/List'),
+            meta: { title: 'dg_property_groups', icon: 'excel', noCache: false },
+          },
+          {
+            path: 'properties',
+            name: 'DguProperties',
+            component: () => import('@/views/catalog/dg/properties/List'),
+            meta: { title: 'dg_properties', icon: 'excel', noCache: false },
+          },
           // {
           //   path: 'products2',
           //   name: 'DguProducts2',
