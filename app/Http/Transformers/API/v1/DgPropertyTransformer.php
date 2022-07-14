@@ -14,7 +14,6 @@ class DgPropertyTransformer extends TransformerAbstract
         return [
             'name' => $property->name,
             'code' => $property->code,
-            'property_group' => $property->group,
             'description' => $property->description,
             'value' => $property->pivot->value,
         ];

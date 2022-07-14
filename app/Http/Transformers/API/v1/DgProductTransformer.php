@@ -10,11 +10,11 @@ use League\Fractal\TransformerAbstract;
 class DgProductTransformer extends TransformerAbstract
 {
     protected array $defaultIncludes = [
-        'manufacture', 'engineManufacture',
+        'manufacture', 'engine_manufacture',
     ];
 
     protected array $availableIncludes = [
-        'properties', 'traidingOptions',
+        'properties', 'traiding_options', 'property_groups',
     ];
 
 
@@ -55,6 +55,14 @@ class DgProductTransformer extends TransformerAbstract
         $properties = $product->properties;
         if (!is_null($properties))
             return $this->collection($properties, new DgPropertyTransformer());
+        return $this->null();
+    }
+
+    public function includePropertyGroups(DGProduct $product)
+    {
+        $property_groups = $product->propertyGroupsWithProperties();
+        if (!is_null($property_groups))
+            return $this->collection($property_groups, new DgPropertyGroupTransformer());
         return $this->null();
     }
 

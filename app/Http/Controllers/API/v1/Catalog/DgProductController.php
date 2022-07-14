@@ -36,7 +36,7 @@ class DgProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = DGProduct::query()->with('properties')->paginate();
+        $products = DGProduct::query()->paginate();
 
         return fractal()->collection($products)
             ->parseIncludes(['properties'])
@@ -83,7 +83,7 @@ class DgProductController extends Controller
         $product = DGProduct::query()->with('properties')->findOrFail($dg_product_id);
 
         return fractal()->item($product)
-            ->parseIncludes(['properties', 'traidingOptions'])
+            ->parseIncludes(['property_groups', 'traiding_options'])
             ->transformWith(DgProductTransformer::class)
             ->serializeWith(ArraySerializer::class);
     }
