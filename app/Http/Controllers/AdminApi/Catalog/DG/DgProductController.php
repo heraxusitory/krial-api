@@ -17,8 +17,8 @@ class DgProductController extends Controller
     public function index(Request $request)
     {
         $products = DGProduct::query()
-            ->orderByDesc('id')
             ->with(['engine_manufacture', 'manufacture',])
+            ->orderByDesc('id')
             ->paginate($request->limit);
         return DgProductResource::collection($products);
     }
