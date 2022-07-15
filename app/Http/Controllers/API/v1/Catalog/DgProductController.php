@@ -37,7 +37,7 @@ class DgProductController extends Controller
         $products = DGProduct::query()->paginate();
 
         return fractal()->collection($products)
-            ->parseIncludes(['properties', 'main_card_properties', 'header_properties'])
+            ->parseIncludes(['main_card_properties',])
             ->transformWith(DgProductTransformer::class)
             ->paginateWith(new IlluminatePaginatorAdapter($products))
             ->serializeWith(ArraySerializer::class);
