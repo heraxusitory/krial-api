@@ -10,11 +10,10 @@ use League\Fractal\TransformerAbstract;
 class DgPropertyGroupTransformer extends TransformerAbstract
 {
     protected array $defaultIncludes = [
-        'properties',
+        'properties', 'main_in_group_properties',
     ];
 
     protected array $availableIncludes = [
-        'properties',
     ];
 
     public function transform(PropertyGroup $group)
@@ -28,6 +27,14 @@ class DgPropertyGroupTransformer extends TransformerAbstract
     public function includeProperties(PropertyGroup $group)
     {
         $properties = $group->properties;
+        if (!is_null($properties))
+            return $this->collection($properties, new DgPropertyTransformer());
+        return $this->null();
+    }
+
+    public function includeMainInGroupProperties(PropertyGroup $group)
+    {
+        $properties = $group->properties->filter(fn($prop) => $prop->is_main_in_group);
         if (!is_null($properties))
             return $this->collection($properties, new DgPropertyTransformer());
         return $this->null();

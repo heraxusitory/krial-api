@@ -5,12 +5,10 @@ namespace App\Http\Controllers\API\v1\Catalog;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Serializers\CustomSerializer;
 use App\Http\Transformers\API\v1\DgProductTransformer;
 use App\Models\Catalog\DG\DGProduct;
 use Illuminate\Http\Request;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
-use League\Fractal\Resource\Collection;
 use League\Fractal\Serializer\ArraySerializer;
 
 class DgProductController extends Controller
@@ -39,7 +37,7 @@ class DgProductController extends Controller
         $products = DGProduct::query()->paginate();
 
         return fractal()->collection($products)
-            ->parseIncludes(['properties'])
+            ->parseIncludes(['properties', 'main_card_properties', 'header_properties'])
             ->transformWith(DgProductTransformer::class)
             ->paginateWith(new IlluminatePaginatorAdapter($products))
             ->serializeWith(ArraySerializer::class);
@@ -83,7 +81,7 @@ class DgProductController extends Controller
         $product = DGProduct::query()->with('properties')->findOrFail($dg_product_id);
 
         return fractal()->item($product)
-            ->parseIncludes(['property_groups', 'traiding_options'])
+            ->parseIncludes(['property_groups', 'traiding_options', 'header_properties'])
             ->transformWith(DgProductTransformer::class)
             ->serializeWith(ArraySerializer::class);
     }

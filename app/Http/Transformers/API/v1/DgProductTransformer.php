@@ -14,7 +14,7 @@ class DgProductTransformer extends TransformerAbstract
     ];
 
     protected array $availableIncludes = [
-        'properties', 'traiding_options', 'property_groups',
+        'main_card_properties', 'header_properties', 'traiding_options', 'property_groups',
     ];
 
 
@@ -50,9 +50,17 @@ class DgProductTransformer extends TransformerAbstract
         return $this->null();
     }
 
-    public function includeProperties(DGProduct $product)
+    public function includeMainCardProperties(DGProduct $product)
     {
-        $properties = $product->properties;
+        $properties = $product->properties()->where('is_main_in_card', true)->get();
+        if (!is_null($properties))
+            return $this->collection($properties, new DgPropertyTransformer());
+        return $this->null();
+    }
+
+    public function includeHeaderProperties(DGProduct $product)
+    {
+        $properties = $product->properties()->where('is_main_in_header', true)->get();
         if (!is_null($properties))
             return $this->collection($properties, new DgPropertyTransformer());
         return $this->null();
