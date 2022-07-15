@@ -10,9 +10,15 @@
         :min-width="column.minWidth"
       >
         <template slot-scope="scope">
-          <span v-if="column.render">{{ column.render(scope.row) }}</span>
-          <span v-else-if="column.renderAsHTML" v-html="column.renderAsHTML(scope.row)" />
-          <span v-else>{{ scope.row[column.key] }}</span>
+          <el-checkbox v-if="column.editable && column.edit_type === 'checkbox'" v-model="scope.row[column.key]" @change="$emit('updateRow', scope.row.id, column.key, scope.row[column.key], )" />
+          <el-input v-else-if="column.render && column.editable && column.edit_type === 'input'" :value="column.render(scope.row)" />
+          <!--          <el-input v-else-if="column.editable && column.edit_type === 'textarea'" v-model="scope.row[column.key]" type="textarea" />-->
+          <!--          <el-input v-else-if="column.editable && column.edit_type === 'input'" v-model="scope.row[column.key]"></el-input>-->
+          <template v-else>
+            <span v-if="column.render">{{ column.render(scope.row) }}</span>
+            <span v-else-if="column.renderAsHTML" v-html="column.renderAsHTML(scope.row)" />
+            <span v-else>{{ scope.row[column.key] }}</span>
+          </template>
         </template>
       </el-table-column>
       <el-table-column v-if="withActions" width="120px" :label="$t('table.actions')" align="right">
@@ -49,6 +55,21 @@ export default {
     };
   },
   methods: {
+    // toggleCheckbox(rowId, value) {
+    //   console.log(rowId, value);
+    //   this.$confirm(`Вы уверены, что хотите редактировать элемент?`, 'Внимание', {
+    //     confirmButtonText: 'OK',
+    //     cancelButtonText: 'Отмена',
+    //     type: 'warning',
+    //   }).then(() => {
+    //     this.$emit('updateRow', { rowId, value });
+    //   }).catch(() => {
+    //     this.$message({
+    //       type: 'info',
+    //       message: 'Изменения отклонены',
+    //     });
+    //   });
+    // },
     handleDelete(id) {
       this.$confirm(`Вы уверены, что хотите позицию с ID: ${id}?`, 'Внимание', {
         confirmButtonText: 'OK',

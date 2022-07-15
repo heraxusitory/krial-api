@@ -13,8 +13,15 @@ class Property extends Model
     protected $fillable = [
         'name',
         'code',
+        'is_main_in_group',
+        'is_main_in_header',
+        'is_filterable',
         'property_group_id',
         'description',
+    ];
+
+    protected $casts = [
+        'is_main_in_group' => 'boolean',
     ];
 
     public function value()
