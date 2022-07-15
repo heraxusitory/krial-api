@@ -15,6 +15,7 @@
         { name: 'Название', key: 'name', minWidth: '40px'},
         { name: 'Код', key: 'code', minWidth: '30px' },
         { name: 'Группа', key: 'group_name', minWidth: '30px', render: (property) => property.group.name,},
+        { name: 'Главная в карточке', key: 'is_main_in_card', minWidth: '20px', editable: true, edit_type: 'checkbox' },
         { name: 'Фильтруемое', key: 'is_filterable', minWidth: '20px', editable: true, edit_type: 'checkbox' },
         { name: 'Главная в группе', key: 'is_main_in_group', minWidth: '20px', editable: true, edit_type: 'checkbox' },
         { name: 'В заголовок деталки', key: 'is_main_in_header', minWidth: '25px', editable: true, edit_type: 'checkbox' },

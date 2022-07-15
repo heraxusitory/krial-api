@@ -13,6 +13,7 @@ class Property extends Model
     protected $fillable = [
         'name',
         'code',
+        'is_main_in_card',
         'is_main_in_group',
         'is_main_in_header',
         'is_filterable',
@@ -21,7 +22,10 @@ class Property extends Model
     ];
 
     protected $casts = [
+        'is_main_in_card' => 'boolean',
         'is_main_in_group' => 'boolean',
+        'is_main_in_header' => 'boolean',
+        'is_filterable' => 'boolean',
     ];
 
     public function value()

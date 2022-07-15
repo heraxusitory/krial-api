@@ -20,6 +20,7 @@ class CreatePropertiesTable extends Migration
             $table->boolean('is_main_in_group')->default(false);
             $table->boolean('is_filterable')->default(false);
             $table->boolean('is_main_in_header')->default(false);
+            $table->boolean('is_main_in_card')->default(false);
             $table->unsignedBigInteger('property_group_id');
             $table->text('description')->nullable();
             $table->timestamps();

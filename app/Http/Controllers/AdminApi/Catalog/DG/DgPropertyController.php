@@ -22,10 +22,11 @@ class DgPropertyController extends Controller
         $request->validate([
             'is_main_in_group' => 'nullable|boolean',
             'is_main_in_header' => 'nullable|boolean',
+            'is_main_in_card' => 'nullable|boolean',
             'is_filterable' => 'nullable|boolean',
             'description' => 'nullable|string',
         ]);
-        $data = array_filter($request->only('is_main_in_group', 'description', 'is_main_in_header', 'is_filterable'), fn($item) => !is_null($item));
+        $data = array_filter($request->only('is_main_in_group', 'is_main_in_card', 'description', 'is_main_in_header', 'is_filterable'), fn($item) => !is_null($item));
         if (!empty($data))
             $property->update($data);
         return response('');
