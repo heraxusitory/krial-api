@@ -81,9 +81,9 @@ export default {
       try {
         const response = await this.getList();
         const { meta } = response;
-        this.query.page = parseInt(meta.current_page);
-        this.query.total = parseInt(meta.total);
-        this.query.limit = parseInt(meta.per_page);
+        this.query.page = parseInt(meta.pagination.current_page);
+        this.query.total = parseInt(meta.pagination.total);
+        this.query.limit = parseInt(meta.pagination.per_page);
 
         const { data } = response;
         console.log(data);
