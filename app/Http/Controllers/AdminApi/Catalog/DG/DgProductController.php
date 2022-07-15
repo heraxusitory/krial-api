@@ -6,11 +6,13 @@ namespace App\Http\Controllers\AdminApi\Catalog\DG;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AdminApi\DgProductResource;
+use App\Http\Transformers\AdminAPI\v1\DgProductTransformer;
 use App\Models\Catalog\DG\DGProduct;
 use App\Models\Catalog\DG\DGTradingOption;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class DgProductController extends Controller
 {
@@ -20,7 +22,10 @@ class DgProductController extends Controller
 //            ->with(['engine_manufacture', 'manufacture',])
             ->orderByDesc('id')
             ->paginate($request->limit);
-        return DgProductResource::collection($products);
+        return fractal()
+            ->collection($products)
+            ->transformWith(DgProductTransformer::class)
+            ->paginateWith(new IlluminatePaginatorAdapter($products));
     }
 
     public function get(Request $request, $product_id)
