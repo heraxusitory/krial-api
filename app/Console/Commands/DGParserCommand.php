@@ -204,6 +204,10 @@ class DGParserCommand extends Command
                         $property_name = $property->first_child()->innertext();
                         $property_name = trim(preg_replace("/[;].*$|&nbsp/", '', $property_name));
 
+                        if (in_array($property_name, ['Производитель', 'Производитель двигателя'])) {
+                            continue;
+                        }
+
 //                    dump($property_name);
                         $prop_value = $property->last_child()->innertext();
 //                    #<a href.*">{0}#

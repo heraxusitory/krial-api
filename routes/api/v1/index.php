@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'catalog'], function () {
     Route::group(['prefix' => 'dg'], function () {
-        Route::get('', [DgProductController::class, 'index']);
+//        Route::get('', [DgProductController::class, 'index']);
+        Route::match(['GET', 'POST'], '', [DgProductController::class, 'index']);
         Route::get('{dg_product_id}', [DgProductController::class, 'get']);
     });
 });

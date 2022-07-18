@@ -7,6 +7,7 @@ namespace App\Http\Controllers\API\v1\Catalog;
 use App\Http\Controllers\Controller;
 use App\Http\Transformers\API\v1\DgProductTransformer;
 use App\Models\Catalog\DG\DGProduct;
+use App\Services\Filter;
 use Illuminate\Http\Request;
 use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 use League\Fractal\Serializer\ArraySerializer;
@@ -34,13 +35,23 @@ class DgProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = DGProduct::query()->paginate();
+        $request->validate([
+            'filters' => 'nullable|array',
+            'filters.*.code' => 'required|string',
+            'filters.*.entity_type' => 'required|string',
+            'filters.*.values' => 'required',
+            'filters.*.type' => 'required|string',
+        ]);
 
+        $filter = (new Filter($request->filters))->filter();
+
+        $products = $filter->query->paginate();
         return fractal()->collection($products)
             ->parseIncludes(['main_card_properties',])
             ->transformWith(DgProductTransformer::class)
             ->paginateWith(new IlluminatePaginatorAdapter($products))
-            ->serializeWith(ArraySerializer::class);
+            ->serializeWith(ArraySerializer::class)
+            ->addMeta(['filters' => $filter->available_filter_params]);
     }
 
     /**

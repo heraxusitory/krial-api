@@ -37,6 +37,21 @@ class Property extends Model
     private const HUMAN_READABLE_FILTER_TYPE_INPUT = 'Значение';
     private const HUMAN_READABLE_FILTER_TYPE_RANGE = 'Диапазон';
 
+    public static function FILTER_TYPE_LIST()
+    {
+        return self::FILTER_TYPE_LIST;
+    }
+
+    public static function FILTER_TYPE_INPUT()
+    {
+        return self::FILTER_TYPE_INPUT;
+    }
+
+    public static function FILTER_TYPE_RANGE()
+    {
+        return self::FILTER_TYPE_RANGE;
+    }
+
     public static function FILTERS()
     {
         return [
