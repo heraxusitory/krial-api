@@ -29,13 +29,13 @@ class Filter
     public function filter()
     {
         $dg_query = DGProduct::query();
-        foreach ($this->filters as $filter) {
+        foreach ($this->filters as &$filter) {
             $property = Property::query()->where(['is_filterable' => true, 'code' => $filter['code']])->first();
             if (!is_null($property)) {
                 $filter_type = $property->filter_type;
             } else
                 continue;
-            $this->dg_product_ids = match ($filter['entity_type']) {
+            $filter['dg_product_ids'] = match ($filter['entity_type']) {
                 'property' => $dg_query->whereHas('properties', function (Builder $query) use ($filter_type, $filter) {
                     $query = $query->where('is_filterable', '=', true)
                         ->where('code', '=', $filter['code']);
@@ -53,7 +53,7 @@ class Filter
                             break;
                         case 'input':
                             if (isset($filter['values']) && !is_array($filter['values'])) {
-                                $query->where('value', 'ILIKE', $filter['values']);
+                                $query->where('value', 'LIKE', $filter['values']);
                             }
                             break;
                     }
@@ -72,8 +72,8 @@ class Filter
             $query = PropertyValue::query()
                 ->where(['elementable_type' => DGProduct::class,])
                 ->where('property_id', $property->id);
-            if (!empty($this->filters))
-                $query->whereIn('elementable_id', $this->dg_product_ids);
+//            if (!empty($this->filters))
+//                $query->whereIn('elementable_id', $this->dg_product_ids);
 
             $filter_item_callback = match ($property->filter_type) {
                 Property::FILTER_TYPE_LIST() => function () use ($property, $query) {
