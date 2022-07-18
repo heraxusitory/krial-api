@@ -42,8 +42,9 @@ class DgProductController extends Controller
             'filters.*.values' => 'required',
             'filters.*.type' => 'required|string',
         ]);
+        $filters = $request->input('filters', []);
 
-        $filter = (new Filter($request->filters))->filter();
+        $filter = (new Filter($filters))->filter();
 
         $products = $filter->query->paginate();
         return fractal()->collection($products)
