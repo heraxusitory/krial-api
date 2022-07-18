@@ -19,6 +19,7 @@ class CreatePropertiesTable extends Migration
             $table->string('code')->unique();
             $table->boolean('is_main_in_group')->default(false);
             $table->boolean('is_filterable')->default(false);
+            $table->string('filter_type')->default('list');
             $table->boolean('is_main_in_header')->default(false);
             $table->boolean('is_main_in_card')->default(false);
             $table->unsignedBigInteger('property_group_id');
