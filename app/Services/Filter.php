@@ -77,7 +77,7 @@ class Filter
 
             $filter_item_callback = match ($property->filter_type) {
                 Property::FILTER_TYPE_LIST() => function () use ($property, $query) {
-                    $values = $query->pluck('value');
+                    $values = $query->pluck('value')->unique;
                     return [
                         'code' => $property->code,
                         'name' => $property->name,
@@ -101,16 +101,10 @@ class Filter
                     ];
                 },
                 Property::FILTER_TYPE_INPUT() => function () use ($property, $query) {
-                    $min = $query->min('value');
-                    $max = $query->max('value');
                     return [
                         'code' => $property->code,
                         'name' => $property->name,
                         'entity_type' => 'property',
-                        'values' => [
-                            'min' => $min,
-                            'max' => $max,
-                        ],
                         'type' => 'range',
                     ];
                 }
