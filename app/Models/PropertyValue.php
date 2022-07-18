@@ -14,6 +14,7 @@ class PropertyValue extends Model
         'elementable_type',
         'elementable_id',
         'property_id',
+        'slug',
         'value',
     ];
 

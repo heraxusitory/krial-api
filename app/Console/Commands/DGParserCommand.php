@@ -235,6 +235,7 @@ class DGParserCommand extends Command
                             'elementable_type' => DGProduct::class,
                             'elementable_id' => $dg_product_model->id,
                             'property_id' => $property->id,
+                            'slug' => Str::slug($prop_value),
                             'value' => $prop_value,
                         ]);
 

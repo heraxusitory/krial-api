@@ -12,6 +12,14 @@
         <template slot-scope="scope">
           <el-checkbox v-if="column.editable && column.edit_type === 'checkbox'" v-model="scope.row[column.key]" @change="$emit('updateRow', scope.row.id, column.key, scope.row[column.key], )" />
           <el-input v-else-if="column.render && column.editable && column.edit_type === 'input'" :value="column.render(scope.row)" />
+          <el-select v-else-if="column.editable && column.edit_type === 'select'" v-model="scope.row[column.key]" placeholder="Выберите" @change="$emit('updateRow', scope.row.id, column.key, scope.row[column.key])">
+            <el-option
+              v-for="(item, key) in column.options"
+              :key="key"
+              :label="item"
+              :value="key"
+            />
+          </el-select>
           <!--          <el-input v-else-if="column.editable && column.edit_type === 'textarea'" v-model="scope.row[column.key]" type="textarea" />-->
           <!--          <el-input v-else-if="column.editable && column.edit_type === 'input'" v-model="scope.row[column.key]"></el-input>-->
           <template v-else>
@@ -19,6 +27,7 @@
             <span v-else-if="column.renderAsHTML" v-html="column.renderAsHTML(scope.row)" />
             <span v-else>{{ scope.row[column.key] }}</span>
           </template>
+
         </template>
       </el-table-column>
       <el-table-column v-if="withActions" width="120px" :label="$t('table.actions')" align="right">
@@ -52,6 +61,7 @@ export default {
     return {
       action_edit: 'edit',
       action_delete: 'delete',
+      selectValue: null,
     };
   },
   methods: {

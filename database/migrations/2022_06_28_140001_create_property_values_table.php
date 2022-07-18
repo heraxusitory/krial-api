@@ -20,6 +20,7 @@ class CreatePropertyValuesTable extends Migration
 //            $table->string('element_model');
 //            $table->unsignedBigInteger('element_model_id');
             $table->unsignedBigInteger('property_id');
+            $table->string('slug');
             $table->string('value');
             $table->timestamps();
         });
