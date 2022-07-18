@@ -107,7 +107,7 @@ class Filter
 
             $filter_item_callback = match ($property->filter_type) {
                 Property::FILTER_TYPE_LIST() => function () use ($property, $query) {
-                    $values = $query->pluck('value')->unique()->sort()->values();
+                    $values = $query->pluck('value', 'slug')->unique()->sort();
                     return [
                         'code' => $property->code,
                         'name' => $property->name,
@@ -135,7 +135,7 @@ class Filter
                         'code' => $property->code,
                         'name' => $property->name,
                         'entity_type' => 'property',
-                        'type' => 'range',
+                        'type' => 'input',
                     ];
                 }
             };
