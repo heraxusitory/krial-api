@@ -5,8 +5,11 @@ namespace App\Services;
 
 
 use App\Models\Catalog\DG\DGProduct;
+use App\Models\Catalog\DG\DGTradingOption;
 use App\Models\Property;
 use App\Models\PropertyValue;
+use App\Models\References\DGEngineManufacture;
+use App\Models\References\DGManufacture;
 use Illuminate\Database\Eloquent\Builder;
 
 class Filter
@@ -30,13 +33,14 @@ class Filter
     {
         $dg_query = DGProduct::query();
         foreach ($this->filters as &$filter) {
-            $property = Property::query()->where(['is_filterable' => true, 'code' => $filter['code']])->first();
-            if (!is_null($property)) {
-                $filter_type = $property->filter_type;
-            } else
-                continue;
-            $filter['dg_product_ids'] = match ($filter['entity_type']) {
-                'property' => $dg_query->whereHas('properties', function (Builder $query) use ($filter_type, $filter) {
+            if ($filter['entity_type'] === 'property') {
+                $property = Property::query()->where(['is_filterable' => true, 'code' => $filter['code']])->first();
+                if (!is_null($property)) {
+                    $filter_type = $property->filter_type;
+                } else
+                    continue;
+//                $filter['dg_product_ids'] = match ($filter['entity_type']) {
+                $dg_query->whereHas('properties', function (Builder $query) use ($filter_type, $filter) {
                     $query = $query->where('is_filterable', '=', true)
                         ->where('code', '=', $filter['code']);
 
@@ -57,8 +61,34 @@ class Filter
                             }
                             break;
                     }
-                })->pluck('id'),
-            };
+                });
+//
+//                    'manufacture' => $dg_query->whereHas('manufacture', function (Builder $query) use ($filter) {
+//                        $query->whereIn('name', $filter['values']);
+//                    }),
+//
+//                    'engine_manufacture' => $dg_query->whereHas('engine_manufacture', function (Builder $query) use ($filter) {
+//                        $query->whereIn('name', $filter['values']);
+//                    }),
+//
+//                    'price' => $dg_query->whereHas('traiding_options', function (Builder $query) use ($filter) {
+//                        $query->whereIn('price', $filter['values']);
+//                    }),
+
+//                };
+            } elseif ($filter['entity_type'] === 'manufacture') {
+                $dg_query->whereHas('manufacture', function (Builder $query) use ($filter) {
+                    $query->whereIn('name', $filter['values']);
+                });
+            } elseif ($filter['entity_type'] === 'engine_manufacture') {
+                $dg_query->whereHas('engine_manufacture', function (Builder $query) use ($filter) {
+                    $query->whereIn('name', $filter['values']);
+                });
+            } elseif ($filter['entity_type'] === 'price') {
+                $dg_query->whereHas('traiding_options', function (Builder $query) use ($filter) {
+                    $query->whereIn('price', $filter['values']);
+                });
+            }
         }
         $this->query = $dg_query;
         $this->setAvailableFilterParams();
@@ -77,7 +107,7 @@ class Filter
 
             $filter_item_callback = match ($property->filter_type) {
                 Property::FILTER_TYPE_LIST() => function () use ($property, $query) {
-                    $values = $query->pluck('value')->unique();
+                    $values = $query->pluck('value')->unique()->sort()->values();
                     return [
                         'code' => $property->code,
                         'name' => $property->name,
@@ -111,6 +141,35 @@ class Filter
             };
             return $filter_item_callback();
         });
+
+        $this->available_filter_params[] =
+            [
+                'code' => 'manufacture',
+                'name' => 'Производитель',
+                'entity_type' => 'manufacture',
+                'values' => DGManufacture::query()->orderBy('name')->pluck('name')->unique(),
+                'type' => 'list',
+            ];
+
+        $this->available_filter_params[] =
+            [
+                'code' => 'engine_manufacture',
+                'name' => 'Двигатель',
+                'entity_type' => 'engine_manufacture',
+                'values' => DGEngineManufacture::query()->orderBy('name')->pluck('name')->unique(),
+                'type' => 'list',
+            ];
+
+        $prices = DGTradingOption::query()->orderBy('price')->pluck('price')->unique();
+
+        $this->available_filter_params[] =
+            [
+                'code' => 'price',
+                'name' => 'Цена',
+                'entity_type' => 'price',
+                'values' => $prices,
+                'type' => 'list',
+            ];
     }
 
 //    public function getAllAvailableFilterParams()

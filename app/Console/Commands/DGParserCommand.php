@@ -204,7 +204,7 @@ class DGParserCommand extends Command
                         $property_name = $property->first_child()->innertext();
                         $property_name = trim(preg_replace("/[;].*$|&nbsp/", '', $property_name));
 
-                        if (in_array($property_name, ['Производитель', 'Производитель двигателя'])) {
+                        if (in_array($property_name, ['Производитель',])) {
                             continue;
                         }
 
@@ -226,7 +226,9 @@ class DGParserCommand extends Command
 //                            $this->info("Производитель двигателя {$engine_manufacture->name} для продукта ДГУ: $dg_product_model->name сохранен" . "\n");
                         }
 
-
+                        if (in_array($property_name, ['Производитель двигателя'])) {
+                            continue;
+                        }
                         $property = Property::updateOrCreate([
                             'code' => Str::slug($property_name . '_' . $group_model->id),
                             'property_group_id' => $group_model->id,
