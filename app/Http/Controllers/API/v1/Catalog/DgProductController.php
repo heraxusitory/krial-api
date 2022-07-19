@@ -46,7 +46,8 @@ class DgProductController extends Controller
 
         $filter = (new Filter($filters))->filter();
 
-        $products = $filter->query->paginate();
+        $products = $filter->query->paginate($request->per_page ?? 30);
+//        return $products;
         return fractal()->collection($products)
             ->parseIncludes(['main_card_properties',])
             ->transformWith(DgProductTransformer::class)
