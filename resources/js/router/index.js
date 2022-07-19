@@ -148,6 +148,13 @@ export const constantRoutes = [
             component: () => import('@/views/catalog/dg/options/List'),
             meta: { title: 'dg_options', icon: 'excel', noCache: false },
           },
+          {
+            path: 'options/edit/:id?',
+            name: 'DguOptionEdit',
+            component: () => import('@/views/catalog/dg/options/Edit'),
+            meta: { title: 'dg_options_edit', icon: 'excel', noCache: false },
+            hidden: true,
+          },
           // {
           //   path: 'products2',
           //   name: 'DguProducts2',

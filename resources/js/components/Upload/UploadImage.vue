@@ -60,6 +60,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    // actionUrl: {
+    //   type: String,
+    //   default: '/api/attachments/save',
+    // },
   },
   data() {
     return {

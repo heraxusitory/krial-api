@@ -4,10 +4,13 @@
 namespace App\Models\Catalog\DG;
 
 
+use App\Laravue\Models\Traits\Attachmentable;
 use Illuminate\Database\Eloquent\Model;
 
 class DGOption extends Model
 {
+    use Attachmentable;
+
     protected $table = 'dg_options';
 
     protected $fillable = [
@@ -20,6 +23,6 @@ class DGOption extends Model
 
     public function group()
     {
-        $this->belongsTo(DGOptionGroup::class, 'id', 'dg_option_group_id');
+        return $this->belongsTo(DGOptionGroup::class, 'dg_option_group_id', 'id');
     }
 }

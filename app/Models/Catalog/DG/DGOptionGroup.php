@@ -17,6 +17,6 @@ class DGOptionGroup extends Model
 
     public function options()
     {
-        $this->hasMany(DGOption::class, 'dg_option_group_id', 'id');
+        return $this->hasMany(DGOption::class, 'dg_option_group_id', 'id');
     }
 }

@@ -15,11 +15,10 @@ class CreateDgOptionsTable extends Migration
     {
         Schema::create('dg_options', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('dg_option_id');
+            $table->unsignedBigInteger('dg_option_group_id');
             $table->string('name');
             $table->string('description');
             $table->unsignedDouble('price');
-            $table->string('image_url');
             $table->timestamps();
         });
     }
