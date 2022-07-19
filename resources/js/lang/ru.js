@@ -16,6 +16,8 @@ export default {
     dg_properties: 'Характеристики',
     dg_manufacturers: 'Производители',
     dg_engine_manufacturers: 'Производители двигателей',
+    dg_option_groups: 'Группа опций',
+    dg_options: 'Опции',
     dg_product_edit: 'Редактирование товара ДГУ',
     banners: 'Баннеры',
     banner_list: 'Список баннеров',

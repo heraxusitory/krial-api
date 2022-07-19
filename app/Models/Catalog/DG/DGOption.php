@@ -17,4 +17,9 @@ class DGOption extends Model
         'price',
         'dg_option_group_id',
     ];
+
+    public function group()
+    {
+        $this->belongsTo(DGOptionGroup::class, 'id', 'dg_option_group_id');
+    }
 }

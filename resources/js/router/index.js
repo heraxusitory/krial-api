@@ -129,6 +129,18 @@ export const constantRoutes = [
             component: () => import('@/views/catalog/dg/properties/List'),
             meta: { title: 'dg_properties', icon: 'excel', noCache: false },
           },
+          {
+            path: 'option_groups',
+            name: 'DguOptionGroups',
+            component: () => import('@/views/catalog/dg/option_groups/List'),
+            meta: { title: 'dg_option_groups', icon: 'excel', noCache: false },
+          },
+          {
+            path: 'options',
+            name: 'DguOptions',
+            component: () => import('@/views/catalog/dg/options/List'),
+            meta: { title: 'dg_options', icon: 'excel', noCache: false },
+          },
           // {
           //   path: 'products2',
           //   name: 'DguProducts2',
