@@ -147,7 +147,7 @@ class Filter
                 'code' => 'manufacture',
                 'name' => 'Производитель',
                 'entity_type' => 'manufacture',
-                'values' => DGManufacture::query()->orderBy('name')->pluck('name')->unique(),
+                'values' => DGManufacture::query()->orderBy('name')->pluck('name', 'code')->unique(),
                 'type' => 'list',
             ];
 
@@ -156,19 +156,23 @@ class Filter
                 'code' => 'engine_manufacture',
                 'name' => 'Двигатель',
                 'entity_type' => 'engine_manufacture',
-                'values' => DGEngineManufacture::query()->orderBy('name')->pluck('name')->unique(),
+                'values' => DGEngineManufacture::query()->orderBy('name')->pluck('name', 'code')->unique(),
                 'type' => 'list',
             ];
 
-        $prices = DGTradingOption::query()->orderBy('price')->pluck('price')->unique();
+        $traiding_options = DGTradingOption::query()/*->orderBy('price')->pluck('price')->unique()*/
+        ;
 
         $this->available_filter_params[] =
             [
                 'code' => 'price',
                 'name' => 'Цена',
                 'entity_type' => 'price',
-                'values' => $prices,
-                'type' => 'list',
+                'values' => [
+                    'min' => $traiding_options->min('price'),
+                    'max' => $traiding_options->max('price')
+                ],
+                'type' => 'range',
             ];
     }
 
