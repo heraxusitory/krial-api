@@ -5,7 +5,10 @@ namespace App\Http\Controllers\API\v1\Catalog;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Transformers\API\v1\DgGroupOptionTransformer;
 use App\Http\Transformers\API\v1\DgProductTransformer;
+use App\Models\Catalog\DG\DGOption;
+use App\Models\Catalog\DG\DGOptionGroup;
 use App\Models\Catalog\DG\DGProduct;
 use App\Services\Filter;
 use Illuminate\Http\Request;
@@ -96,6 +99,49 @@ class DgProductController extends Controller
         return fractal()->item($product)
             ->parseIncludes(['property_groups', 'traiding_options', 'header_properties'])
             ->transformWith(DgProductTransformer::class)
+            ->serializeWith(ArraySerializer::class);
+    }
+
+
+    /**
+     * @OA\Get(
+     *     path="/catalog/dg/{dg_product_id}/group_options",
+     *     summary="Получить опции ДГУ",
+     *     tags={"Дизельные генераторы"},
+     *      @OA\Parameter(
+     *        name="dg_product_id",
+     *        in="path",
+     *        description="Уникальный идентификатор элемента списка ДГУ",
+     *        @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *        ),
+     *        required=true,
+     *        example=1
+     *     ),  *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(ref="#/definitions/DgProduct")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(ref="#/definitions/DgProduct")
+     *         ),
+     *     )
+     * )
+     */
+    public function groupOptions(Request $request, $dg_product_id)
+    {
+        $options = DGOptionGroup::query()->whereHas('options')->get();
+        return fractal()
+            ->collection($options)
+            ->transformWith(DgGroupOptionTransformer::class)
             ->serializeWith(ArraySerializer::class);
     }
 }

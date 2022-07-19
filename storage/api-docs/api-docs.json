@@ -53,6 +53,36 @@
                     }
                 }
             }
+        },
+        "/catalog/dg/{dg_product_id}/group_options": {
+            "get": {
+                "tags": [
+                    "Дизельные генераторы"
+                ],
+                "summary": "Получить опции ДГУ",
+                "operationId": "2214632495ee94a4370f20416fdb5623",
+                "parameters": [
+                    {
+                        "name": "dg_product_id",
+                        "in": "path",
+                        "description": "Уникальный идентификатор элемента списка ДГУ",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
         }
     }
 }

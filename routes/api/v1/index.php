@@ -7,6 +7,9 @@ Route::group(['prefix' => 'catalog'], function () {
     Route::group(['prefix' => 'dg'], function () {
 //        Route::get('', [DgProductController::class, 'index']);
         Route::match(['GET', 'POST'], '', [DgProductController::class, 'index']);
-        Route::get('{dg_product_id}', [DgProductController::class, 'get']);
+        Route::group(['prefix' => '{dg_product_id}'], function () {
+            Route::get('', [DgProductController::class, 'get']);
+            Route::get('group_options', [DgProductController::class, 'groupOptions']);
+        });
     });
 });
