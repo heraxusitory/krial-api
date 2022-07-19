@@ -1,14 +1,14 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <!--      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">-->
-      <!--        {{ $t('table.add') }}-->
-      <!--      </el-button>-->
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+        {{ $t('table.add') }}
+      </el-button>
     </div>
     <AbstractTable
       :data="data"
-      :with-actions="false"
-      :target="'catalog/dgu/property_groups'"
+      :with-actions="true"
+      :target="'catalog/dgu/option_groups'"
       :is-on-load="isLoad"
       :columns="[
         { name: 'ID', key: 'id', width: 65, align: 'center' },
@@ -52,9 +52,22 @@ export default {
   },
   methods: {
     handleCreate() {
-
+      this.$router.push({ name: 'DguOptionGroupEdit' });
     },
-    handleDelete() {},
+    async handleDelete(payload) {
+      try {
+        await (new DgOptionGroupResource()).destroy(payload.id);
+        this.$message({
+          message: 'Группа опций успешно удалена',
+          type: 'success',
+          duration: 3 * 1000,
+        });
+      } catch (e) {
+        console.log(e);
+      } finally {
+        await this.setList();
+      }
+    },
     getList() {
       return (new DgOptionGroupResource()).list(this.query);
     },

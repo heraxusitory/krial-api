@@ -136,6 +136,13 @@ export const constantRoutes = [
             meta: { title: 'dg_option_groups', icon: 'excel', noCache: false },
           },
           {
+            path: 'option_groups/edit/:id?',
+            name: 'DguOptionGroupEdit',
+            component: () => import('@/views/catalog/dg/option_groups/Edit'),
+            meta: { title: 'dg_option_groups_edit', icon: 'excel', noCache: false },
+            hidden: true,
+          },
+          {
             path: 'options',
             name: 'DguOptions',
             component: () => import('@/views/catalog/dg/options/List'),
