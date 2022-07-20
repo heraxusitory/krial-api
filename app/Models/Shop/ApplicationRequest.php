@@ -13,6 +13,7 @@ class ApplicationRequest extends Model
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'sort',
         'config',
     ];

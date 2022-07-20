@@ -83,6 +83,54 @@
                     }
                 }
             }
+        },
+        "/shop/application_requests": {
+            "post": {
+                "tags": [
+                    "Заявки"
+                ],
+                "summary": "Создание заявки для коммерческого предложения",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "name": "Jessica Smith",
+                                    "email": "email@email.ru",
+                                    "phone": "+843774367"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
         }
     }
 }
