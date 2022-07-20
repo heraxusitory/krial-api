@@ -17,6 +17,6 @@ Route::group(['prefix' => 'catalog'], function () {
 
 Route::group(['prefix' => 'shop'], function () {
     Route::group(['prefix' => 'application_requests'], function () {
-        Route::post('', [ApplicationRequestController::class, 'create']);
+        Route::post('', [ApplicationRequestController::class, 'create'])->middleware('throttle:2,1');
     });
 });
