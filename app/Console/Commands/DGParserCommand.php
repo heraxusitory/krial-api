@@ -229,21 +229,48 @@ class DGParserCommand extends Command
                         if (in_array($property_name, ['Производитель двигателя'])) {
                             continue;
                         }
-                        $property = Property::updateOrCreate([
-                            'code' => Str::slug($property_name . '_' . $group_model->id),
-                            'property_group_id' => $group_model->id,
-                        ], [
-                            'name' => $property_name,
-                            'description' => $description ?? null,
-                        ]);
 
-                        $property_value = PropertyValue::updateOrCreate([
-                            'elementable_type' => DGProduct::class,
-                            'elementable_id' => $dg_product_model->id,
-                            'property_id' => $property->id,
-                            'slug' => Str::slug($prop_value),
-                            'value' => $prop_value,
-                        ]);
+                        if (in_array($property_name, ['Максимальная мощность', 'Номинальная мощность', 'Базовая мощность'])) {
+//                            dump($property_name, $prop_value);
+                            $explode_values = explode('/', $prop_value);
+//                            dd($explode_values);
+                            foreach ($explode_values as $value) {
+                                $value = explode(' ', trim($value));
+
+                                $property = Property::updateOrCreate([
+                                    'code' => Str::slug($property_name . ', ' . $value[1] . '_' . $group_model->id),
+                                    'property_group_id' => $group_model->id,
+                                ], [
+                                    'name' => $property_name . ', ' . $value[1],
+                                    'description' => $description ?? null,
+                                ]);
+
+                                $property_value = PropertyValue::updateOrCreate([
+                                    'elementable_type' => DGProduct::class,
+                                    'elementable_id' => $dg_product_model->id,
+                                    'property_id' => $property->id,
+                                    'slug' => Str::slug($value[0]),
+                                    'value' => $value[0],
+                                ]);
+                            }
+                        } else {
+
+                            $property = Property::updateOrCreate([
+                                'code' => Str::slug($property_name . '_' . $group_model->id),
+                                'property_group_id' => $group_model->id,
+                            ], [
+                                'name' => $property_name,
+                                'description' => $description ?? null,
+                            ]);
+
+                            $property_value = PropertyValue::updateOrCreate([
+                                'elementable_type' => DGProduct::class,
+                                'elementable_id' => $dg_product_model->id,
+                                'property_id' => $property->id,
+                                'slug' => Str::slug($prop_value),
+                                'value' => $prop_value,
+                            ]);
+                        }
 
 //                        $this->info("Свойство {$property->name} = {$property_value->value} для продукта ДГУ группы {$group_model->name}: $dg_product_model->name сохранено" . "\n");
 
