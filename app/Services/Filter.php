@@ -47,17 +47,17 @@ class Filter
                     switch ($filter_type) {
                         case 'list':
                             if (isset($filter['values']) && is_array($filter['values'])) {
-                                $query->whereIn('value', $filter['values']);
+                                $query->whereIn('slug', $filter['values']);
                             }
                             break;
                         case 'range':
                             if (isset($filter['values']['min']) && isset($filter['values']['max'])) {
-                                $query->whereBetween('value', [$filter['values']['min'], $filter['values']['max']]);
+                                $query->whereBetween('slug', [$filter['values']['min'], $filter['values']['max']]);
                             }
                             break;
                         case 'input':
                             if (isset($filter['values']) && !is_array($filter['values'])) {
-                                $query->where('value', 'LIKE', $filter['values']);
+                                $query->where('slug', 'LIKE', $filter['values']);
                             }
                             break;
                     }
@@ -78,15 +78,15 @@ class Filter
 //                };
             } elseif ($filter['entity_type'] === 'manufacture') {
                 $dg_query->whereHas('manufacture', function (Builder $query) use ($filter) {
-                    $query->whereIn('name', $filter['values']);
+                    $query->whereIn('code', $filter['values']);
                 });
             } elseif ($filter['entity_type'] === 'engine_manufacture') {
                 $dg_query->whereHas('engine_manufacture', function (Builder $query) use ($filter) {
-                    $query->whereIn('name', $filter['values']);
+                    $query->whereIn('code', $filter['values']);
                 });
             } elseif ($filter['entity_type'] === 'price') {
                 $dg_query->whereHas('traiding_options', function (Builder $query) use ($filter) {
-                    $query->whereIn('price', $filter['values']);
+                    $query->whereIn('price', [$filter['values']['min'], $filter['values']['min']]);
                 });
             }
         }

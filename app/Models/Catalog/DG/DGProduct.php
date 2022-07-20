@@ -38,7 +38,7 @@ class DGProduct extends Model
     public function properties()
     {
         return $this->belongsToMany(Property::class, PropertyValue::class, 'elementable_id', 'property_id')
-            ->withPivot('elementable_type', 'value')
+            ->withPivot('elementable_type', 'value', 'slug')
             ->wherePivot('elementable_type', '=', DGProduct::class);
         /*->whereExists(
             function ($query) {
