@@ -86,7 +86,6 @@ export default {
         this.query.limit = parseInt(meta.pagination.per_page);
 
         const { data } = response;
-        console.log(data);
         this.data = data;
       } catch (e) {
         console.log(e);

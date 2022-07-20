@@ -174,6 +174,32 @@ export const constantRoutes = [
       // },
     ],
   },
+  {
+    path: '/shop',
+    component: Layout,
+    alwaysShow: true,
+    // redirect: 'noredirect',
+    name: 'Shop',
+    meta: { title: 'shop', icon: 'excel', noCache: false },
+    children: [
+      {
+        path: 'application_requests',
+        name: 'ApplicationRequests',
+        // redirect: 'noredirect',
+        meta: { title: 'application_requests', icon: 'excel', noCache: false },
+        alwaysShow: true,
+        // component: () => import('@/views/catalog/dg/products/List'),
+        component: () => import('@/views/shop/application_requests/List'),
+      },
+      {
+        path: 'application_requests/edit/:id?',
+        name: 'ApplicationRequestEdit',
+        component: () => import('@/views/shop/application_requests/Edit'),
+        meta: { title: 'application_request_edit', icon: 'excel', noCache: false },
+        hidden: true,
+      },
+    ],
+  },
   // {
   //   path: '/catalog',
   //   component: Layout,
