@@ -11,9 +11,14 @@ use App\Models\References\DGEngineManufacture;
 use App\Models\References\DGManufacture;
 use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class DGProduct extends Model
 {
+    use QueryCacheable;
+
+//    protected $cacheFor = 180;
+
     protected $table = 'dg_products';
 
     protected $properties = [];
@@ -48,11 +53,16 @@ class DGProduct extends Model
 //            ->where('elementable_type', DGProduct::class);
     }
 
-    public function propertyGroupsWithProperties()
+    public function propertyGroupsWithProperties($cache_enabled = false)
     {
-        $property_groups = PropertyGroup::all();
+        $property_groups_query = PropertyGroup::query();
+        $property_groups_query = $cache_enabled ? $property_groups_query->cacheFor(180) : $property_groups_query;
+        $property_groups = $property_groups_query->get();
+
         foreach ($property_groups as $key => $property_group) {
-            if ($properties = $this->properties()->where('property_group_id', $property_group->id)->get()) {
+            $properties_query = $this->properties()->where('property_group_id', $property_group->id);
+            $properties_query = $cache_enabled ? $properties_query->cacheFor(180) : $properties_query;
+            if ($properties = $properties_query->get()) {
                 $property_group->properties = $properties;
             } else {
                 unset($property_groups[$key]);

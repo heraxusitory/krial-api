@@ -49,7 +49,11 @@ class DgProductController extends Controller
 
         $filter = (new Filter($filters))->filter();
 
-        $products = $filter->query->paginate($request->per_page ?? 30);
+        $products = $filter->query/*->with([
+            'traiding_options' => function ($query) {
+                return $query->cacheTags(["dg_product:traiding_options"]);
+            }
+        ])*/ ->cacheFor(180)->latest()->paginate($request->per_page ?? 30);
 //        return $products;
         return fractal()->collection($products)
             ->parseIncludes(['main_card_properties',])
@@ -94,10 +98,19 @@ class DgProductController extends Controller
      */
     public function get(Request $request, $dg_product_id)
     {
-        $product = DGProduct::query()->with('properties')->findOrFail($dg_product_id);
+        $product = DGProduct::query()->with([
+            'properties',
+            'traiding_options' => function ($query) use ($dg_product_id) {
+                return $query->cacheFor(180)->cacheTags(["dg_product:{$dg_product_id}:traiding_options"]);
+            },
+//            'property_groups' => function($query) {
+//                return $query->cacheFor(180)->cacheTags(["dg_product:{$dg_product_id}:traiding_options"]);
+//
+//            }
+        ])->cacheFor(180)->findOrFail($dg_product_id);
 
         return fractal()->item($product)
-            ->parseIncludes(['property_groups', 'traiding_options', 'header_properties'])
+            ->parseIncludes(['cached_property_groups', 'traiding_options', 'header_properties'])
             ->transformWith(DgProductTransformer::class)
             ->serializeWith(ArraySerializer::class);
     }

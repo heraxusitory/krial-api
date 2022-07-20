@@ -7,10 +7,11 @@ namespace App\Models\Catalog\DG;
 use App\Laravue\Models\Traits\Attachmentable;
 use App\Models\References\DGVersion;
 use Illuminate\Database\Eloquent\Model;
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class DGTradingOption extends Model
 {
-    use Attachmentable;
+    use  QueryCacheable, Attachmentable;
 
     protected $table = 'dg_trading_options';
 

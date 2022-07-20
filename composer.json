@@ -28,6 +28,7 @@
         "laravel/sanctum": "^2.1",
         "laravel/telescope": "*",
         "laravel/tinker": "^2.0",
+        "rennokki/laravel-eloquent-query-cache": "*",
         "spatie/laravel-fractal": "*",
         "spatie/laravel-permission": "^3.0",
         "sunra/php-simple-html-dom-parser": "^1.5"
