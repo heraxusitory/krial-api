@@ -14,7 +14,7 @@ class CategoryResource extends JsonResource
             'id' => $this->id,
             'code' => $this->code,
             'name' => $this->name,
-            'compilations' => $this->compilations? json_decode($this->compilations) : [],
+            'compilations' => $this->compilations?? [],
             'is_active' => $this->is_active,
             'is_root' => $this->is_root,
             'seo_description' => $this->seo_description,

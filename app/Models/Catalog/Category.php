@@ -23,6 +23,7 @@ class Category extends Model
     protected $casts = [
         'is_root' => 'boolean',
         'is_active' => 'boolean',
+        'compilations' => 'array',
     ];
 
     protected const CATEGORIES = [

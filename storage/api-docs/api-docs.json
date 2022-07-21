@@ -10,6 +10,49 @@
         }
     ],
     "paths": {
+        "/catalog/categories": {
+            "get": {
+                "tags": [
+                    "Категории"
+                ],
+                "summary": "Получить список категорий с преимуществами",
+                "operationId": "26ef1dc594003e89316b22e76c40d08d",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/catalog/categories/{category_code}": {
+            "get": {
+                "tags": [
+                    "Категории"
+                ],
+                "summary": "Получить категорию по ее коду с преимуществами",
+                "operationId": "78599cce9b3b284049b61aa4c9904c09",
+                "parameters": [
+                    {
+                        "name": "category_code",
+                        "in": "path",
+                        "description": "Уникальный код категории",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "dg"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
         "/catalog/dg": {
             "get": {
                 "tags": [
