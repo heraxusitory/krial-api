@@ -79,4 +79,9 @@ class Category extends Model
         return self::CATEGORIES;
     }
 
+    public function benefits()
+    {
+        return $this->belongsToMany(Benefit::class, 'category_to_benefit');
+    }
+
 }

@@ -7,7 +7,6 @@ namespace App\Http\Controllers\API\v1\Catalog;
 use App\Http\Controllers\Controller;
 use App\Http\Transformers\API\v1\DgGroupOptionTransformer;
 use App\Http\Transformers\API\v1\DgProductTransformer;
-use App\Models\Catalog\DG\DGOption;
 use App\Models\Catalog\DG\DGOptionGroup;
 use App\Models\Catalog\DG\DGProduct;
 use App\Services\Filter;

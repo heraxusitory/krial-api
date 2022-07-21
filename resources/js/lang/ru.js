@@ -26,6 +26,8 @@ export default {
     application_request_edit: 'Редактирование заявки',
     categories: 'Категории',
     category_edit: 'Редактирование категории',
+    benefits: 'Преимущества',
+    benefit_edit: 'Редактирование преимуществ',
     banners: 'Баннеры',
     banner_list: 'Список баннеров',
     banners_edit: 'Редактирование баннера',

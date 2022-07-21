@@ -123,6 +123,19 @@ export const constantRoutes = [
         hidden: true,
       },
       {
+        path: 'benefits',
+        name: 'Benefits',
+        meta: { title: 'benefits', icon: 'excel', noCache: false },
+        component: () => import('@/views/catalog/benefits/Index'),
+      },
+      {
+        path: 'benefits/edit/:id?',
+        name: 'BenefitEdit',
+        meta: { title: 'benefit_edit', icon: 'excel', noCache: false },
+        component: () => import('@/views/catalog/benefits/Edit'),
+        hidden: true,
+      },
+      {
         path: 'dgu',
         name: 'Dgu',
         // redirect: 'noredirect',
