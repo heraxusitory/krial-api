@@ -87,6 +87,20 @@ export const constantRoutes = [
       },
     ],
   },
+  // {
+  //   path: '/categories',
+  //   component: Layout,
+  //   name: 'Categories',
+  //   meta: { title: 'categories', icon: 'excel', noCache: false },
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       name: 'CategoryList',
+  //       meta: { title: 'categories_list', icon: 'excel', noCache: false },
+  //       component: () => import('@/views/categories/Index'),
+  //     },
+  //   ],
+  // },
   {
     path: '/catalog',
     component: Layout,
@@ -95,6 +109,19 @@ export const constantRoutes = [
     name: 'Catalog',
     meta: { title: 'catalog', icon: 'excel', noCache: false },
     children: [
+      {
+        path: 'categories',
+        name: 'Categories',
+        meta: { title: 'categories', icon: 'excel', noCache: false },
+        component: () => import('@/views/catalog/categories/Index'),
+      },
+      {
+        path: 'categories/edit/:id?',
+        name: 'CategoryEdit',
+        meta: { title: 'category_edit', icon: 'excel', noCache: false },
+        component: () => import('@/views/catalog/categories/Edit'),
+        hidden: true,
+      },
       {
         path: 'dgu',
         name: 'Dgu',

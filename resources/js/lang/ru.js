@@ -24,6 +24,8 @@ export default {
     shop: 'Магазин',
     application_requests: 'Заявки',
     application_request_edit: 'Редактирование заявки',
+    categories: 'Категории',
+    category_edit: 'Редактирование категории',
     banners: 'Баннеры',
     banner_list: 'Список баннеров',
     banners_edit: 'Редактирование баннера',

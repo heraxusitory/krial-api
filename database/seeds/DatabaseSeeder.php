@@ -52,5 +52,6 @@ class DatabaseSeeder extends Seeder
         $visitor->syncRoles($visitorRole);
         $this->call(UsersTableSeeder::class);
         $this->call(ApplicationRequestTableSeeder::class);
+        $this->call(CategoryTableSeeder::class);
     }
 }

@@ -50,6 +50,7 @@ Route::namespace('AdminApi')->group(function () use ($role_editor, $role_admin) 
         Route::get('roles/{role}/permissions', 'RoleController@permissions')->middleware('permission:' . Acl::PERMISSION_PERMISSION_MANAGE);
 
         Route::group(['prefix' => 'catalog'], function () {
+            require 'catalog/category.php';
             Route::group(['prefix' => 'dg'], function () {
                 require 'catalog/dg/products.php';
                 require 'catalog/dg/manufacturers.php';
