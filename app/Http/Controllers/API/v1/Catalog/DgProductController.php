@@ -42,7 +42,7 @@ class DgProductController extends Controller
             'filters' => 'nullable|array',
             'filters.*.code' => 'required|string',
             'filters.*.entity_type' => 'required|string',
-            'filters.*.values' => 'required',
+            'filters.*.values' => 'nullable',
             'filters.*.type' => 'required|string',
         ]);
         $filters = $request->input('filters', []);
