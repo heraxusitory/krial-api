@@ -53,7 +53,7 @@ class Filter
                             break;
                         case 'range':
                             if (isset($filter['values']['min']) && isset($filter['values']['max'])) {
-                                $query->whereBetween('slug', [$filter['values']['min'], $filter['values']['max']]);
+                                $query->whereBetween('slug', [(string)($filter['values']['min']), (string)$filter['values']['max']]);
                             }
                             break;
                         case 'input':
