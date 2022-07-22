@@ -17,7 +17,7 @@ class CategoryTableSeeder extends Seeder
                 'code' => $category['code'],
                 'categoriable_type' => $category['class'],
                 'is_root' => array_key_exists('is_root', $category) ? $category['is_root'] : false,
-                'is_active' => array_key_exists('is_root', $category),
+                'is_active' => true,
             ]);
         }
     }
