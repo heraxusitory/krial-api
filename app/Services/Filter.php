@@ -119,8 +119,12 @@ class Filter
                     ];
                 },
                 Property::FILTER_TYPE_RANGE() => function () use ($property, $query) {
-                    $min = $query->min('value');
-                    $max = $query->max('value');
+//                    dump($query->pluck('value')->min());
+//                    dd($query->pluck('value')->max());
+//                    $min = $query->min('value');
+//                    $max = $query->max('value');
+                    $min = $query->pluck('value')->min();
+                    $max = $query->pluck('value')->max();
                     return [
                         'code' => $property->code,
                         'name' => $property->name,
