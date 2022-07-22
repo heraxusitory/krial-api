@@ -6,6 +6,7 @@ namespace App\Http\Controllers\API\v1\Catalog;
 
 use App\Http\Controllers\Controller;
 use App\Http\Transformers\API\v1\CategoryTransformer;
+use App\Http\Transformers\API\v1\MarketingBannerTransformer;
 use App\Models\Catalog\Category;
 use Illuminate\Http\Request;
 use League\Fractal\Serializer\ArraySerializer;
@@ -78,6 +79,44 @@ class CategoryController extends Controller
             ->item($category)
             ->parseIncludes(['benefits',])
             ->transformWith(CategoryTransformer::class)
+            ->serializeWith(ArraySerializer::class);
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/catalog/categories/{category_code}/banners",
+     *     summary="Получить маркетинговые баннеры по коду категории",
+     *     tags={"Категории"},
+     *      @OA\Parameter(
+     *        name="category_code",
+     *        in="path",
+     *        description="Уникальный код категории",
+     *        @OA\Schema(
+     *           type="string",
+     *        ),
+     *        required=true,
+     *        example="dg"
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not found"
+     *     )
+     * )
+     */
+    public function getBanners(Request $request, $category_code)
+    {
+        $category = Category::query()
+            ->where(['code' => $category_code, 'is_active' => true, 'is_root' => false])
+            ->firstOrFail();
+
+        $banners = $category->marketing_banners;
+        return fractal()
+            ->collection($banners)
+            ->transformWith(MarketingBannerTransformer::class)
             ->serializeWith(ArraySerializer::class);
     }
 }

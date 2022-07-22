@@ -123,6 +123,28 @@ export const constantRoutes = [
         hidden: true,
       },
       {
+        path: 'marketing',
+        name: 'Marketing',
+        meta: { title: 'marketing', icon: 'excel', noCache: false },
+        component: () => import('@/views/catalog/marketing/Index'),
+        alwaysShow: true,
+        children: [
+          {
+            path: 'banners',
+            name: 'MarketingBanners',
+            component: () => import('@/views/catalog/marketing/banners/List'),
+            meta: { title: 'marketing_banners', icon: 'excel', noCache: false },
+          },
+          {
+            path: 'banners/edit/:id?',
+            name: 'MarketingBannerEdit',
+            component: () => import('@/views/catalog/marketing/banners/Edit'),
+            meta: { title: 'marketing_banner_edit', icon: 'excel', noCache: false },
+            hidden: true,
+          },
+        ],
+      },
+      {
         path: 'benefits',
         name: 'Benefits',
         meta: { title: 'benefits', icon: 'excel', noCache: false },

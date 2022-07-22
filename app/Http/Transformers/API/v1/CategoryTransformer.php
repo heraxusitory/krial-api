@@ -47,4 +47,12 @@ class CategoryTransformer extends TransformerAbstract
             return $this->collection($benefits, new BenefitTransformer());
         return $this->null();
     }
+
+//    public function includeBanners(Category $category)
+//    {
+//        $banners = $category->marketing_banners()->where('is_active', true)->get();
+//        if (!is_null($banners))
+//            return $this->collection($banners, new MarketingBannerTransformer());
+//        return $this->null();
+//    }
 }

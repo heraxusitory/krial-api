@@ -53,6 +53,35 @@
                 }
             }
         },
+        "/catalog/categories/{category_code}/banners": {
+            "get": {
+                "tags": [
+                    "Категории"
+                ],
+                "summary": "Получить маркетинговые баннеры по коду категории",
+                "operationId": "1748095c28ff0b21534ca714992bebf4",
+                "parameters": [
+                    {
+                        "name": "category_code",
+                        "in": "path",
+                        "description": "Уникальный код категории",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "dg"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
         "/catalog/dg": {
             "get": {
                 "tags": [

@@ -19,6 +19,7 @@ Route::group(['prefix' => 'catalog'], function () {
         Route::get('', [CategoryController::class, 'index']);
         Route::group(['prefix' => '{category_code}'], function () {
             Route::get('', [CategoryController::class, 'getByCode']);
+            Route::get('banners', [CategoryController::class, 'getBanners']);
         });
     });
 });

@@ -8,6 +8,7 @@ use App\Laravue\Models\Traits\Attachmentable;
 use App\Models\Catalog\BlockContainer\BlockContainerProduct;
 use App\Models\Catalog\Compressor\CompressorProduct;
 use App\Models\Catalog\DG\DGProduct;
+use App\Models\Catalog\Marketing\MarketingBanner;
 use App\Models\Catalog\SurgeProtector\SurgeProtectorProduct;
 use App\Models\Catalog\UPS\UPSProduct;
 use Illuminate\Database\Eloquent\Model;
@@ -83,6 +84,11 @@ class Category extends Model
     public function benefits()
     {
         return $this->belongsToMany(Benefit::class, 'category_to_benefit');
+    }
+
+    public function marketing_banners()
+    {
+        return $this->belongsToMany(MarketingBanner::class, 'category_to_marketing_banner');
     }
 
 }
