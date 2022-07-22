@@ -53,7 +53,7 @@ class DgProductTransformer extends TransformerAbstract
 
     public function includeMainCardProperties(DGProduct $product)
     {
-        $properties = $product->properties()->where('is_main_in_card', true)->get();
+        $properties = $product->properties->where('is_main_in_card', true);
         if (!is_null($properties))
             return $this->collection($properties, new DgPropertyTransformer());
         return $this->null();

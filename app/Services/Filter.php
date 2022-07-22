@@ -100,6 +100,7 @@ class Filter
         $properties = Property::query()->where('is_filterable', true)->get();
         $this->available_filter_params = $properties->map(function ($property) {
             $query = PropertyValue::query()
+                ->cacheFor(180)
                 ->where(['elementable_type' => DGProduct::class,])
                 ->where('property_id', $property->id);
 //            if (!empty($this->filters))
@@ -160,8 +161,7 @@ class Filter
                 'type' => 'list',
             ];
 
-        $traiding_options = DGTradingOption::query()/*->orderBy('price')->pluck('price')->unique()*/
-        ;
+        $traiding_options = DGTradingOption::query()/*->orderBy('price')->pluck('price')->unique()*/;
 
         $this->available_filter_params[] =
             [

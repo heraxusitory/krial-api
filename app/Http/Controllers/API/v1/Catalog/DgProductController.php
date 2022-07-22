@@ -48,11 +48,35 @@ class DgProductController extends Controller
 
         $filter = (new Filter($filters))->filter();
 
-        $products = $filter->query/*->with([
+        /*$products = DGProduct::query()
+            ->with([
+                'manufacture' => function ($query) {
+                    return $query->cacheFor(180)->cacheTags(["dg_products:manufacture"]);
+                },
+                'engine_manufacture' => function ($query) {
+                    return $query->cacheFor(180)->cacheTags(["dg_products:engine_manufacture"]);
+                },
+                'properties' => function ($query) {
+                    return $query->cacheFor(180)->cacheTags(["dg_products:properties"]);
+                },
+                'traiding_options' => function ($query) {
+                    return $query->cacheFor(180)->cacheTags(["dg_products:traiding_options"]);
+                },
+            ])*/
+        $products = $filter->query->with([
+            'manufacture' => function ($query) {
+                return $query->cacheFor(180)->cacheTags(["dg_products:manufacture"]);
+            },
+            'engine_manufacture' => function ($query) {
+                return $query->cacheFor(180)->cacheTags(["dg_products:engine_manufacture"]);
+            },
+            'properties' => function ($query) {
+                return $query->cacheFor(180)->cacheTags(["dg_products:properties"]);
+            },
             'traiding_options' => function ($query) {
-                return $query->cacheTags(["dg_product:traiding_options"]);
-            }
-        ])*/ ->cacheFor(180)->latest()->paginate($request->per_page ?? 30);
+                return $query->cacheFor(180)->cacheTags(["dg_products:traiding_options"]);
+            },
+        ])->cacheFor(180)->cacheTags(["dg_products"])->latest()->paginate($request->per_page ?? 30);
 //        return $products;
         return fractal()->collection($products)
             ->parseIncludes(['main_card_properties',])
