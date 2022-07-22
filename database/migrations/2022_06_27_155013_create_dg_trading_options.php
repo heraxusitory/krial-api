@@ -18,7 +18,7 @@ class CreateDgTradingOptions extends Migration
             $table->unsignedBigInteger('dg_product_id');
             $table->unsignedBigInteger('dg_version_id');
             $table->json('media')->nullable();
-            $table->unsignedDouble('price')->nullable();
+            $table->unsignedDouble('price')->default(0);
             $table->timestamps();
         });
     }
