@@ -87,7 +87,7 @@ class Filter
                 });
             } elseif ($filter['entity_type'] === 'price') {
                 $dg_query->whereHas('traiding_options', function (Builder $query) use ($filter) {
-                    $query->whereIn('price', [$filter['values']['min'], $filter['values']['max']]);
+                    $query->whereIn('price', [(string)$filter['values']['min'], (string)$filter['values']['max']]);
                 });
             }
         }
