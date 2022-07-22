@@ -23,6 +23,10 @@ class MarketingBanner extends Model
         'url',
     ];
 
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];
+
     private const INFORMATION_TYPE = 'information';
     private const FORM_TYPE = 'form';
 

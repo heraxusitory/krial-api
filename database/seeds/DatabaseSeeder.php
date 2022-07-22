@@ -53,5 +53,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(ApplicationRequestTableSeeder::class);
         $this->call(CategoryTableSeeder::class);
+        $this->call(BenefitTableSeeder::class);
+        $this->call(MarketingBannerTableSeeder::class);
     }
 }

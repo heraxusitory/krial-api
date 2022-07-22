@@ -22,7 +22,7 @@
           }
           else return '';
         }},
-        { name: 'Активный', key: 'is_active', minWidth: '50px', },
+        { name: 'Активный', key: 'is_active', minWidth: '50px', render: (banner) => banner.is_active ? 'Да': 'Нет'},
         { name: 'Сортировка', key: 'sort', minWidth: '40px' },
       ]"
       @delete="handleDelete"
