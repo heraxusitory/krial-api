@@ -48,21 +48,6 @@ class DgProductController extends Controller
 
         $filter = (new Filter($filters))->filter();
 
-        /*$products = DGProduct::query()
-            ->with([
-                'manufacture' => function ($query) {
-                    return $query->cacheFor(180)->cacheTags(["dg_products:manufacture"]);
-                },
-                'engine_manufacture' => function ($query) {
-                    return $query->cacheFor(180)->cacheTags(["dg_products:engine_manufacture"]);
-                },
-                'properties' => function ($query) {
-                    return $query->cacheFor(180)->cacheTags(["dg_products:properties"]);
-                },
-                'traiding_options' => function ($query) {
-                    return $query->cacheFor(180)->cacheTags(["dg_products:traiding_options"]);
-                },
-            ])*/
         $products = $filter->query->with([
             'manufacture' => function ($query) {
                 return $query->cacheFor(180)->cacheTags(["dg_products:manufacture"]);

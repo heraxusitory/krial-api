@@ -32,9 +32,10 @@ class Filter
     public function filter()
     {
         $dg_query = DGProduct::query();
+        $properties = Property::query()->where('is_filterable', true)->cacheFor(180)->cacheTags(["search_properties_for_filter"])->get();
         foreach ($this->filters as &$filter) {
             if ($filter['entity_type'] === 'property') {
-                $property = Property::query()->where(['is_filterable' => true, 'code' => $filter['code']])->first();
+                $property = $properties->where('code', $filter['code'])->first();
                 if (!is_null($property)) {
                     $filter_type = $property->filter_type;
                 } else
@@ -97,7 +98,7 @@ class Filter
 
     private function setAvailableFilterParams()
     {
-        $properties = Property::query()->where('is_filterable', true)->get();
+        $properties = Property::query()->where('is_filterable', true)->cacheFor(180)->cacheTags(["properties_for_available_filters"])->get();
         $this->available_filter_params = $properties->map(function ($property) {
             $query = PropertyValue::query()
                 ->cacheFor(180)
@@ -161,7 +162,8 @@ class Filter
                 'type' => 'list',
             ];
 
-        $traiding_options = DGTradingOption::query()/*->orderBy('price')->pluck('price')->unique()*/;
+        $traiding_options = DGTradingOption::query()/*->orderBy('price')->pluck('price')->unique()*/
+        ;
 
         $this->available_filter_params[] =
             [
