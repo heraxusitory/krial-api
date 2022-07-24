@@ -21,7 +21,7 @@ class DGProduct extends Model
 
     protected $table = 'dg_products';
 
-    protected $properties = [];
+//    protected $properties = [];
 
     protected $fillable = [
         'name',
@@ -56,13 +56,14 @@ class DGProduct extends Model
     public function propertyGroupsWithProperties($cache_enabled = false)
     {
         $property_groups_query = PropertyGroup::query();
-        $property_groups_query = $cache_enabled ? $property_groups_query->cacheFor(180) : $property_groups_query;
+//        $property_groups_query = $cache_enabled ? $property_groups_query/*->cacheFor(180)*/ : $property_groups_query;
         $property_groups = $property_groups_query->get();
 
         foreach ($property_groups as $key => $property_group) {
-            $properties_query = $this->properties()->where('property_group_id', $property_group->id);
-            $properties_query = $cache_enabled ? $properties_query->cacheFor(180) : $properties_query;
-            if ($properties = $properties_query->get()) {
+            $properties = $this->properties->where('property_group_id', $property_group->id);
+//            $properties_query = $this->properties->where('property_group_id', $property_group->id);
+//            $properties_query = $cache_enabled ? $properties_query/*->cacheFor(180)*/ : $properties_query;
+            if ($properties->isNotEmpty()) {
                 $property_group->properties = $properties;
             } else {
                 unset($property_groups[$key]);

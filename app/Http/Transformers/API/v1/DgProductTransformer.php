@@ -61,8 +61,8 @@ class DgProductTransformer extends TransformerAbstract
 
     public function includeHeaderProperties(DGProduct $product)
     {
-        $properties = $product->properties()->where('is_main_in_header', true)->get();
-        if (!is_null($properties))
+        $properties = $product->properties->where('is_main_in_header', true);
+        if ($properties->isNotEmpty())
             return $this->collection($properties, new DgPropertyTransformer());
         return $this->null();
     }

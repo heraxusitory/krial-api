@@ -107,7 +107,15 @@ class DgProductController extends Controller
     public function get(Request $request, $dg_product_id)
     {
         $product = DGProduct::query()->with([
-            'properties',
+            'manufacture' => function ($query) use ($dg_product_id) {
+                return $query->cacheFor(180)->cacheTags(["dg_products:{$dg_product_id}:manufacture"]);
+            },
+            'engine_manufacture' => function ($query) use ($dg_product_id) {
+                return $query->cacheFor(180)->cacheTags(["dg_products:{$dg_product_id}:engine_manufacture"]);
+            },
+            'properties' => function ($query) use ($dg_product_id) {
+                return $query->cacheFor(180)->cacheTags(["dg_product:{$dg_product_id}:properties"]);
+            },
             'traiding_options' => function ($query) use ($dg_product_id) {
                 return $query->cacheFor(180)->cacheTags(["dg_product:{$dg_product_id}:traiding_options"]);
             },
@@ -115,7 +123,7 @@ class DgProductController extends Controller
 //                return $query->cacheFor(180)->cacheTags(["dg_product:{$dg_product_id}:traiding_options"]);
 //
 //            }
-        ])->cacheFor(180)->findOrFail($dg_product_id);
+        ])->cacheFor(180)->cacheTags(["dg_products:{$dg_product_id}"])->findOrFail($dg_product_id);
 
         return fractal()->item($product)
             ->parseIncludes(['cached_property_groups', 'traiding_options', 'header_properties'])
