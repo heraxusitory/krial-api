@@ -61,7 +61,7 @@ class DgProductController extends Controller
             'traiding_options' => function ($query) {
                 return $query->cacheFor(180)->cacheTags(["dg_products:traiding_options"]);
             },
-        ])->cacheFor(180)->cacheTags(["dg_products"])->latest()->paginate($request->per_page ?? 30);
+        ])->cacheFor(180)->cacheTags(["dg_products"])->orderBy('id', 'desc')->paginate($request->per_page ?? 30);
 //        return $products;
         return fractal()->collection($products)
             ->parseIncludes(['main_card_properties',])
