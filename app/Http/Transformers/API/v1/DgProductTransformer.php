@@ -21,7 +21,7 @@ class DgProductTransformer extends TransformerAbstract
 
     public function transform(DGProduct $product): array
     {
-        $first_traiding_option = $product->traiding_options->where('dg_version_id', 1)->first();
+        $first_traiding_option = $product->traiding_options->firstWhere('dg_version_id', 1);
         $attachments = $first_traiding_option->attachments;
         $media_urls = $attachments->map(function ($attachment) {
             return $attachment->getUrl();
@@ -85,9 +85,9 @@ class DgProductTransformer extends TransformerAbstract
 
     public function includeTraidingOptions(DGProduct $product)
     {
-        $properties = $product->traiding_options;
-        if (!is_null($properties))
-            return $this->collection($properties, new DgPTraidingOptionTransformer());
+        $options = $product->traiding_options;
+        if ($options->isNotEmpty())
+            return $this->collection($options, new DgPTraidingOptionTransformer());
         return $this->null();
     }
 }
