@@ -126,7 +126,7 @@ class DgProductController extends Controller
         ])->cacheFor(180)->cacheTags(["dg_products:{$dg_product_id}"])->findOrFail($dg_product_id);
 
         return fractal()->item($product)
-            ->parseIncludes(['cached_property_groups', 'traiding_options', 'header_properties'])
+            ->parseIncludes(['property_groups', 'traiding_options', 'header_properties'])
             ->transformWith(DgProductTransformer::class)
             ->serializeWith(ArraySerializer::class);
     }

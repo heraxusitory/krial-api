@@ -15,7 +15,7 @@ class DgProductTransformer extends TransformerAbstract
 
     protected array $availableIncludes = [
         'main_card_properties', 'header_properties', 'traiding_options', 'property_groups',
-        'cached_property_groups',
+        /*'cached_property_groups',*/
     ];
 
 
@@ -75,13 +75,13 @@ class DgProductTransformer extends TransformerAbstract
         return $this->null();
     }
 
-    public function includeCachedPropertyGroups(DGProduct $product)
-    {
-        $property_groups = $product->propertyGroupsWithProperties(true);
-        if (!is_null($property_groups))
-            return $this->collection($property_groups, new DgPropertyGroupTransformer());
-        return $this->null();
-    }
+//    public function includeCachedPropertyGroups(DGProduct $product)
+//    {
+//        $property_groups = $product->propertyGroupsWithProperties(true);
+//        if (!is_null($property_groups))
+//            return $this->collection($property_groups, new DgPropertyGroupTransformer());
+//        return $this->null();
+//    }
 
     public function includeTraidingOptions(DGProduct $product)
     {
