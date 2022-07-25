@@ -2,7 +2,7 @@ import Resource from '@/api/resource';
 
 class BenefitResource extends Resource {
   constructor() {
-    super('catalog/benefits');
+    super('catalog/marketing/benefits');
   }
 }
 

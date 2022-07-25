@@ -8,7 +8,7 @@
     <AbstractTable
       :data="data"
       :with-actions="true"
-      :target="'catalog/benefits'"
+      :target="'catalog/marketing/benefits'"
       :is-on-load="isLoad"
       :columns="[
         { name: 'ID', key: 'id', width: 65, align: 'center' },
@@ -32,7 +32,7 @@
 <script>
 import AbstractTable from '@/components/AbstractTable/AbstractTable';
 import Pagination from '@/components/Pagination';
-import BenefitResource from '@/api/benefits/benefit';
+import BenefitResource from '@/api/catalog/marketing/benefit';
 export default {
   name: 'BenefitList',
   components: { AbstractTable, Pagination },

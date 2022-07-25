@@ -59,7 +59,7 @@
 import Loader from '@/components/Loader/Loader';
 import UploadImage from '@/components/Upload/UploadImage';
 import helpers from '@/vendor/helpers';
-import BenefitResource from '../../../api/benefits/benefit';
+import BenefitResource from '@/api/catalog/marketing/benefit';
 import CategoryResource from '@/api/catalog/category/category';
 
 export default {

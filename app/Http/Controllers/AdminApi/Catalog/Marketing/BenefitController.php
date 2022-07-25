@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Http\Controllers\AdminApi\Catalog;
+namespace App\Http\Controllers\AdminApi\Catalog\Marketing;
 
 
 use App\Http\Controllers\Controller;

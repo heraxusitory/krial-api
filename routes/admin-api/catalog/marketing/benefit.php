@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AdminApi\Catalog\BenefitController;
+use App\Http\Controllers\AdminApi\Catalog\Marketing\BenefitController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'benefits'], function () {

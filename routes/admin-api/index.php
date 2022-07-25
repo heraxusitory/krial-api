@@ -51,7 +51,6 @@ Route::namespace('AdminApi')->group(function () use ($role_editor, $role_admin) 
 
         Route::group(['prefix' => 'catalog'], function () {
             require 'catalog/category.php';
-            require 'catalog/benefit.php';
             Route::group(['prefix' => 'dg'], function () {
                 require 'catalog/dg/products.php';
                 require 'catalog/dg/manufacturers.php';
@@ -65,6 +64,7 @@ Route::namespace('AdminApi')->group(function () use ($role_editor, $role_admin) 
             });
             Route::group(['prefix' => 'marketing'], function () {
                 require 'catalog/marketing/banner.php';
+                require 'catalog/marketing/benefit.php';
             });
         });
         Route::group(['prefix' => 'shop'], function () {
