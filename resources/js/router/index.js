@@ -217,6 +217,19 @@ export const constantRoutes = [
             meta: { title: 'dg_options_edit', icon: 'excel', noCache: false },
             hidden: true,
           },
+          {
+            path: 'series',
+            name: 'DguSeries',
+            component: () => import('@/views/catalog/dg/series/List'),
+            meta: { title: 'dg_series', icon: 'excel', noCache: false },
+          },
+          {
+            path: 'series/edit/:id?',
+            name: 'DguSeriesEdit',
+            component: () => import('@/views/catalog/dg/series/Edit'),
+            meta: { title: 'dg_series_edit', icon: 'excel', noCache: false },
+            hidden: true,
+          },
           // {
           //   path: 'products2',
           //   name: 'DguProducts2',

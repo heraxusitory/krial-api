@@ -17,7 +17,7 @@
         { name: 'Группа', key: 'group_name', minWidth: '30px', render: (property) => property.group.name,},
         { name: 'Главная в карточке', key: 'is_main_in_card', minWidth: '22px', editable: true, edit_type: 'checkbox' },
         { name: 'Фильтруемое', key: 'is_filterable', minWidth: '16px', editable: true, edit_type: 'checkbox' },
-        { name: 'Тип фильтра', key: 'filter_type', minWidth: '16px', editable: true, edit_type: 'select', options: filterTypes },
+        { name: 'Тип фильтра', key: 'filter_type', minWidth: '16px', editable: true, edit_type: 'select', custom: true, options: filterTypes },
         { name: 'Главная в группе', key: 'is_main_in_group', minWidth: '20px', editable: true, edit_type: 'checkbox' },
         { name: 'В заголовок деталки', key: 'is_main_in_header', minWidth: '25px', editable: true, edit_type: 'checkbox' },
         { name: 'Описание', key: 'description', minWidth: '40px', editable: true, edit_type: 'textarea' },

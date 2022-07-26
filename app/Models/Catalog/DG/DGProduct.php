@@ -27,7 +27,7 @@ class DGProduct extends Model
         'name',
         'second_name',
         'code',
-        'series',
+        'series_id',
         'sort',
         'is_active',
         'manufacture_id',
@@ -85,5 +85,10 @@ class DGProduct extends Model
     public function engine_manufacture()
     {
         return $this->hasOne(DGEngineManufacture::class, 'id', 'engine_manufacture_id');
+    }
+
+    public function series()
+    {
+        return $this->belongsTo(DGSeries::class, 'series_id', 'id');
     }
 }

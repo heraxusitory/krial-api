@@ -19,6 +19,7 @@ class DgProductController extends Controller
     public function index(Request $request)
     {
         $products = DGProduct::query()
+            ->with('series')
 //            ->with(['engine_manufacture', 'manufacture',])
             ->orderByDesc('id')
             ->paginate($request->limit);
@@ -138,5 +139,47 @@ class DgProductController extends Controller
         $product = DGProduct::query()->findOrFail($product_id);
         $product->delete();
         return response('', 204);
+    }
+
+    public function updateProductRow(Request $request, $dg_product_id)
+    {
+        $dg_product = DGProduct::query()->find($dg_product_id);
+        $request->validate([
+            'series_id' => 'nullable|exists:dg_series,id',
+        ]);
+        $data = $request->only('series_id');
+        if (!empty($data))
+            $dg_product->update($data);
+        return response('');
+    }
+
+    public function changeActive(Request $request)
+    {
+        $request->validate([
+            'dg_products' => 'required|array',
+            'dg_products.*.id' => 'required|exists:dg_products,id',
+            'is_active' => 'required|boolean',
+        ]);
+
+        $dg_product_ids = collect($request->dg_products)->pluck('id');
+
+        DGProduct::query()->whereIn('id', $dg_product_ids)->update(['is_active' => $request->is_active]);
+
+        return response('');
+    }
+
+    public function setSeries(Request $request)
+    {
+        $request->validate([
+            'dg_products' => 'required|array',
+            'dg_products.*.id' => 'required|exists:dg_products,id',
+            'series_id' => 'nullable|exists:dg_series,id',
+        ]);
+
+        $dg_product_ids = collect($request->dg_products)->pluck('id');
+
+        DGProduct::query()->whereIn('id', $dg_product_ids)->update(['series_id' => $request->series_id ?? null]);
+
+        return response('');
     }
 }

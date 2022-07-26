@@ -21,6 +21,8 @@ export default {
     dg_option_groups_edit: 'Редактирование группы опций',
     dg_options: 'Опции',
     dg_product_edit: 'Редактирование товара ДГУ',
+    dg_series: 'Серии',
+    dg_series_edit: 'Редактирование серии',
     shop: 'Магазин',
     application_requests: 'Заявки',
     application_request_edit: 'Редактирование заявки',

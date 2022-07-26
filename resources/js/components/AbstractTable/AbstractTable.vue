@@ -1,6 +1,11 @@
 <template>
   <div class="abstract-table">
-    <el-table v-loading="isOnLoad" :data="data" row-key="id" border fit highlight-current-row style="width: 100%">
+    <el-table ref="multipleTable" v-loading="isOnLoad" :data="data" row-key="id" border fit highlight-current-row style="width: 100%" @selection-change="handleSelectionChange">
+      <el-table-column
+        v-if="multipleSelect"
+        type="selection"
+        width="40"
+      />
       <el-table-column
         v-for="(column, index) in columns"
         :key="index"
@@ -12,12 +17,20 @@
         <template slot-scope="scope">
           <el-checkbox v-if="column.editable && column.edit_type === 'checkbox'" v-model="scope.row[column.key]" @change="$emit('updateRow', scope.row.id, column.key, scope.row[column.key], )" />
           <el-input v-else-if="column.render && column.editable && column.edit_type === 'input'" :value="column.render(scope.row)" />
-          <el-select v-else-if="column.editable && column.edit_type === 'select'" v-model="scope.row[column.key]" placeholder="Выберите" @change="$emit('updateRow', scope.row.id, column.key, scope.row[column.key])">
+          <el-select v-else-if="column.custom && column.editable && column.edit_type === 'select'" v-model="scope.row[column.key]" placeholder="Выберите" @change="$emit('updateRow', scope.row.id, column.key, scope.row[column.key])">
             <el-option
               v-for="(item, key) in column.options"
               :key="key"
               :label="item"
               :value="key"
+            />
+          </el-select>
+          <el-select v-else-if="column.editable && column.edit_type === 'select'" v-model="scope.row[column.key]" clearable placeholder="Выберите" @change="$emit('updateRow', scope.row.id, column.key, scope.row[column.key])">
+            <el-option
+              v-for="item in column.options"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             />
           </el-select>
           <!--          <el-input v-else-if="column.editable && column.edit_type === 'textarea'" v-model="scope.row[column.key]" type="textarea" />-->
@@ -56,6 +69,7 @@ export default {
     isOnLoad: { type: Boolean, required: false, default: false },
     columns: { type: Array, required: true },
     target: { type: String, required: true },
+    multipleSelect: { type: Boolean, required: false, default: () => false },
   },
   data() {
     return {
@@ -65,21 +79,12 @@ export default {
     };
   },
   methods: {
-    // toggleCheckbox(rowId, value) {
-    //   console.log(rowId, value);
-    //   this.$confirm(`Вы уверены, что хотите редактировать элемент?`, 'Внимание', {
-    //     confirmButtonText: 'OK',
-    //     cancelButtonText: 'Отмена',
-    //     type: 'warning',
-    //   }).then(() => {
-    //     this.$emit('updateRow', { rowId, value });
-    //   }).catch(() => {
-    //     this.$message({
-    //       type: 'info',
-    //       message: 'Изменения отклонены',
-    //     });
-    //   });
-    // },
+    handleSelectionChange(rows) {
+      this.$emit('multipleSelect', rows);
+    },
+    clearSelection() {
+      this.$refs.multipleTable.clearSelection();
+    },
     handleDelete(id) {
       this.$confirm(`Вы уверены, что хотите позицию с ID: ${id}?`, 'Внимание', {
         confirmButtonText: 'OK',

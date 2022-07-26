@@ -25,6 +25,8 @@ class DgProductTransformer extends TransformerAbstract
             'description' => $product->description,
             'allgen_vendor_code' => $product->allgen_vendor_code,
             'allgen_url' => $product->allgen_url,
+            'series_id' => $product->series?->id,
+            'series' => $product->series,
         ];
     }
 }

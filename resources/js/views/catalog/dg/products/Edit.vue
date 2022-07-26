@@ -189,7 +189,6 @@ export default {
     },
 
     removeCard(key) {
-      console.log(key);
       const idx = this.form.traiding_options.findIndex(item => item.id === key);
       this.form.traiding_options.splice(idx, 1);
       this.changeVersion();

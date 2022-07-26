@@ -61,6 +61,7 @@ Route::namespace('AdminApi')->group(function () use ($role_editor, $role_admin) 
                 require 'catalog/dg/property_groups.php';
                 require 'catalog/dg/option_groups.php';
                 require 'catalog/dg/options.php';
+                require 'catalog/dg/series.php';
             });
             Route::group(['prefix' => 'marketing'], function () {
                 require 'catalog/marketing/banner.php';
