@@ -9,6 +9,7 @@ use App\Http\Resources\AdminApi\DgProductResource;
 use App\Http\Transformers\AdminAPI\v1\DgProductTransformer;
 use App\Models\Catalog\DG\DGProduct;
 use App\Models\Catalog\DG\DGTradingOption;
+use App\Services\Sortings\DgProductSorting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -16,13 +17,20 @@ use League\Fractal\Pagination\IlluminatePaginatorAdapter;
 
 class DgProductController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, DgProductSorting $sorting)
     {
-        $products = DGProduct::query()
-            ->with('series')
-//            ->with(['engine_manufacture', 'manufacture',])
-            ->orderByDesc('id')
+        $sort = $request->get('sort');
+        $sort_field = in_array($sort, [
+            'id', 'name', ''
+        ]);
+        $query = DGProduct::query()
+            ->with('series');
+        $query = $request?->name ? $query->where('name', 'like', "%{$request->name}%") : $query;
+        $products = $query
+            ->sorting($sorting)
             ->paginate($request->limit);
+//        dd($query
+//            ->toSql());
         return fractal()
             ->collection($products)
             ->transformWith(DgProductTransformer::class)

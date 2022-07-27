@@ -9,13 +9,14 @@ use App\Models\PropertyGroup;
 use App\Models\PropertyValue;
 use App\Models\References\DGEngineManufacture;
 use App\Models\References\DGManufacture;
+use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class DGProduct extends Model
 {
-    use QueryCacheable;
+    use QueryCacheable, Sortable;
 
 //    protected $cacheFor = 180;
 
@@ -43,14 +44,7 @@ class DGProduct extends Model
     public function properties()
     {
         return $this->belongsToMany(Property::class, PropertyValue::class, 'elementable_id', 'property_id')
-            ->withPivot(/*'elementable_type',*/ 'value', 'slug');
-//            ->wherePivot('elementable_type', '=', DGProduct::class);
-        /*->whereExists(
-            function ($query) {
-                $query->from('property_values')
-                    ->where('property_values.elementable_type', DGProduct::class);
-            });*/
-//            ->where('elementable_type', DGProduct::class);
+            ->withPivot('value', 'slug');
     }
 
     public function propertyGroupsWithProperties($cache_enabled = false)

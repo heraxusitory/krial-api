@@ -1,6 +1,12 @@
 <template>
   <div class="app-container">
     <el-row type="flex" style="margin-bottom: 20px">
+      <div>
+        <el-input v-model="query.name" :placeholder="'Имя'" style="width: 200px;" class="filter-item" />
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-search" @click="handleFilter">
+          {{ $t('table.search') }}
+        </el-button>
+      </div>
       <div class="header-buttons">
         <el-button style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
           {{ $t('table.add') }}
@@ -42,20 +48,21 @@
       :multiple-select="true"
 
       :columns="[
-        { name: 'ID', key: 'id', width: 65, align: 'center' },
-        { name: 'Имя', key: 'name', minWidth: '50px',/* render: (banner) => banner.type.name*/ },
-        { name: 'Производитель', key: 'manufacture_name', minWidth: '40px' },
-        { name: 'Двигатель', key: 'engine_manufacture_name', minWidth: '20px' },
-        { name: 'Серия', key: 'series_id', minWidth: '20px', editable: true, edit_type: 'select', render: (product) => product.series ? product.series.name : '', options: series },
-        { name: 'Бренд', key: 'title', minWidth: '20px' },
-        { name: 'Код', key: 'code', minWidth: '40px' },
-        { name: 'Сортировка', key: 'sort', minWidth: '25px' },
-        { name: 'Актив', key: 'is_active', minWidth: '20px', render: (item) => {return item.is_active? 'Да' : 'Нет'} },
-        { name: 'Артикул Allgen', key: 'allgen_vendor_code', minWidth: '30px', },
+        { name: 'ID', key: 'id', width: 65, align: 'center', sortable: 'custom', },
+        { name: 'Имя', key: 'name', minWidth: '50px' , sortable: 'custom',},
+        { name: 'Производитель', key: 'manufacture_name', sortable: 'custom', minWidth: '40px' },
+        { name: 'Двигатель', key: 'engine_manufacture_name', sortable: 'custom', minWidth: '20px' },
+        { name: 'Серия', key: 'series_id', minWidth: '20px', sortable: 'custom', editable: true, edit_type: 'select', render: (product) => product.series ? product.series.name : '', options: series },
+        { name: 'Бренд', key: 'title', minWidth: '20px', sortable: 'custom', },
+        { name: 'Код', key: 'code', minWidth: '40px', sortable: 'custom', },
+        { name: 'Сортировка', key: 'sort', minWidth: '25px', sortable: 'custom', },
+        { name: 'Актив', key: 'is_active', minWidth: '20px', sortable: 'custom', render: (item) => {return item.is_active? 'Да' : 'Нет'} },
+        { name: 'Артикул Allgen', key: 'allgen_vendor_code', sortable: 'custom', minWidth: '30px', },
       ]"
       @delete="handleDelete"
       @multipleSelect="handleMultipleSelect"
       @updateRow="updatePropertyRow"
+      @sort="handleSort"
     />
     <pagination
       v-show="query.total>0"
@@ -119,6 +126,18 @@ export default {
     this.setList();
   },
   methods: {
+    // sortChange(column, prop, order) {
+    //   console.log(column, prop, order);
+    // },
+    handleSort(obj) {
+      console.log(obj.column.property);
+      this.query.sort = obj.column.property;
+      this.query.order = obj.order === 'descending' ? 'desc' : 'asc';
+      this.setList();
+    },
+    handleFilter() {
+      this.setList();
+    },
     async updatePropertyRow(id, key, value) {
       this.isLoad = true;
       try {

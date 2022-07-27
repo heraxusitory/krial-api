@@ -1,6 +1,17 @@
 <template>
   <div class="abstract-table">
-    <el-table ref="multipleTable" v-loading="isOnLoad" :data="data" row-key="id" border fit highlight-current-row style="width: 100%" @selection-change="handleSelectionChange">
+    <el-table
+      ref="multipleTable"
+      v-loading="isOnLoad"
+      :data="data"
+      row-key="id"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+      @sort-change="sortChange"
+    >
       <el-table-column
         v-if="multipleSelect"
         type="selection"
@@ -9,11 +20,38 @@
       <el-table-column
         v-for="(column, index) in columns"
         :key="index"
+        :prop="column.key"
         :label="column.name"
         :width="column.width"
         :align="column.align"
         :min-width="column.minWidth"
+        :sortable="column.sortable"
       >
+        <!--        <template slot="header">-->
+        <!--          {{ column.name }}-->
+        <!--          <el-dropdown>-->
+        <!--            <span class="el-dropdown-link">-->
+        <!--              <i class="el-icon-arrow-down el-icon&#45;&#45;right" />-->
+        <!--            </span>-->
+        <!--            <el-select-->
+        <!--              v-model="value"-->
+        <!--              multiple-->
+        <!--              filterable-->
+        <!--              remote-->
+        <!--              reserve-keyword-->
+        <!--              placeholder="Please enter a keyword"-->
+        <!--              :remote-method="remoteMethod"-->
+        <!--              :loading="loading"-->
+        <!--            >-->
+        <!--              <el-option-->
+        <!--                v-for="item in [{value: 1, label: 'fdfsf'}]"-->
+        <!--                :key="item.value"-->
+        <!--                :label="item.label"-->
+        <!--                :value="item.value"-->
+        <!--              />-->
+        <!--            </el-select>-->
+        <!--          </el-dropdown>-->
+        <!--        </template>-->
         <template slot-scope="scope">
           <el-checkbox v-if="column.editable && column.edit_type === 'checkbox'" v-model="scope.row[column.key]" @change="$emit('updateRow', scope.row.id, column.key, scope.row[column.key], )" />
           <el-input v-else-if="column.render && column.editable && column.edit_type === 'input'" :value="column.render(scope.row)" />
@@ -73,12 +111,16 @@ export default {
   },
   data() {
     return {
+      value: [],
       action_edit: 'edit',
       action_delete: 'delete',
       selectValue: null,
     };
   },
   methods: {
+    sortChange(column) {
+      this.$emit('sort', column);
+    },
     handleSelectionChange(rows) {
       this.$emit('multipleSelect', rows);
     },
