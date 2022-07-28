@@ -21,6 +21,7 @@
     "require": {
         "php": "^7.4",
         "darkaonline/l5-swagger": "^8.3",
+        "elasticsearch/elasticsearch": "*",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3",

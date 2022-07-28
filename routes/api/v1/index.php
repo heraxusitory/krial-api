@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\v1\Catalog\CategoryController;
 use App\Http\Controllers\API\v1\Catalog\DgProductController;
+use App\Http\Controllers\API\v1\Search\SearchController;
 use App\Http\Controllers\API\v1\Shop\ApplicationRequestController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,8 @@ Route::group(['prefix' => 'shop'], function () {
     Route::group(['prefix' => 'application_requests'], function () {
         Route::post('', [ApplicationRequestController::class, 'create'])->middleware('throttle:2,1');
     });
+});
+
+Route::prefix('search')->middleware('throttle:600,1')->group(function () {
+    Route::get('', [SearchController::class, 'search']);
 });

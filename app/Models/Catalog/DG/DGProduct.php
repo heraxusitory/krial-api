@@ -9,6 +9,7 @@ use App\Models\PropertyGroup;
 use App\Models\PropertyValue;
 use App\Models\References\DGEngineManufacture;
 use App\Models\References\DGManufacture;
+use App\Traits\Searchable;
 use App\Traits\Sortable;
 use Illuminate\Database\Eloquent\Concerns\HasAttributes;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ use Rennokki\QueryCache\Traits\QueryCacheable;
 
 class DGProduct extends Model
 {
-    use QueryCacheable, Sortable;
+    use QueryCacheable, Sortable, Searchable;
 
 //    protected $cacheFor = 180;
 

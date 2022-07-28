@@ -156,6 +156,35 @@
                 }
             }
         },
+        "/search": {
+            "get": {
+                "tags": [
+                    "Поиск"
+                ],
+                "summary": "Глобальный поиск через ElasticSearch",
+                "operationId": "6141a98e71c4b5ec34f032c0a1102f29",
+                "parameters": [
+                    {
+                        "name": "query_str",
+                        "in": "query",
+                        "description": "Строка поиска",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Дизельный"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "503": {
+                        "description": "Server unavailable"
+                    }
+                }
+            }
+        },
         "/shop/application_requests": {
             "post": {
                 "tags": [

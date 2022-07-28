@@ -5,11 +5,12 @@ namespace App\Models\Catalog;
 
 
 use App\Laravue\Models\Traits\Attachmentable;
+use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 class Benefit extends Model
 {
-    use Attachmentable;
+    use Attachmentable, Searchable;
 
     protected $table = 'benefits';
 

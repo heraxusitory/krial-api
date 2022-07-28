@@ -30,4 +30,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'search' => [
+        'enabled' => env('ELASTICSEARCH_ENABLED', false),
+        'user' => env('ELASTICSEARCH_USER', ''),
+        'password' => env('ELASTICSEARCH_PASS', ''),
+        'hosts' => [
+            [
+                'host' => env('ELASTICSEARCH_HOSTS', 'localhost'),
+                'scheme' => env('ELASTICSEARCH_SCHEME', 'http'),
+                'port' => env('ELASTICSEARCH_PORT', 9200)
+            ]
+        ]
+    ]
+
 ];
