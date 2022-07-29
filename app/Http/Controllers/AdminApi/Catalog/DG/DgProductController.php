@@ -25,7 +25,7 @@ class DgProductController extends Controller
         ]);
         $query = DGProduct::query()
             ->with('series');
-        $query = $request?->name ? $query->where('name', 'like', "%{$request->name}%") : $query;
+        $query = $request?->name ? $query->where('dg_products.name', 'like', "%{$request->name}%") : $query;
         $products = $query
             ->sorting($sorting)
             ->paginate($request->limit);

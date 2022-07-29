@@ -26,7 +26,7 @@ class DgProductSorting extends QuerySorting
     public function manufacture_name()
     {
         return $this->builder
-            ->select(['dg_products.*'])
+            ->select(['dg_products.*', 'dg_manufactures.*'])
             ->leftJoin('dg_manufactures', 'dg_products.manufacture_id', '=', 'dg_manufactures.id')
             ->orderBy('dg_manufactures.name', $this->order);
     }
@@ -34,7 +34,7 @@ class DgProductSorting extends QuerySorting
     public function engine_manufacture_name()
     {
         return $this->builder
-            ->select(['dg_products.*'])
+            ->select(['dg_products.*', 'dg_engine_manufactures.*'])
             ->leftJoin('dg_engine_manufactures', 'dg_products.engine_manufacture_id', '=', 'dg_engine_manufactures.id')
             ->orderBy('dg_engine_manufactures.name', $this->order);
     }
@@ -42,7 +42,7 @@ class DgProductSorting extends QuerySorting
     public function series_id()
     {
         return $this->builder
-            ->select(['dg_products.*'])
+            ->select(['dg_products.*', 'dg_series.*'])
             ->leftJoin('dg_series', 'dg_products.series_id', '=', 'dg_series.id')
             ->orderBy('dg_series.name', $this->order);
     }

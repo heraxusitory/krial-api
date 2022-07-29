@@ -131,6 +131,7 @@ export default {
     // },
     handleSort(obj) {
       console.log(obj.column.property);
+      // this.query.name = '';
       this.query.sort = obj.column.property;
       this.query.order = obj.order === 'descending' ? 'desc' : 'asc';
       this.setList();
