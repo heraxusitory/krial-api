@@ -53,7 +53,7 @@ class SearchController extends Controller
 //        return response()->json($collection;
         if (array_key_exists('products', $collection->toArray())) {
             $collection['products'] =  fractal()->collection($collection['products'])
-                ->parseIncludes(['main_card_properties',])
+                ->parseIncludes(['main_card_properties', 'header_properties'])
                 ->transformWith(DgProductTransformer::class)
 //                ->paginateWith(new IlluminatePaginatorAdapter($products))
                 ->serializeWith(ArraySerializer::class);
