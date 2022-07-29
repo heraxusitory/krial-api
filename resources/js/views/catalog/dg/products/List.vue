@@ -136,6 +136,7 @@ export default {
       this.setList();
     },
     handleFilter() {
+      this.query.sort = '';
       this.setList();
     },
     async updatePropertyRow(id, key, value) {
